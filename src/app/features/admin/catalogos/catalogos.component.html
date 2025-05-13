@@ -1,0 +1,452 @@
+<div class="catalogs-container">
+    <!-- Mensajes de estado -->
+    <div *ngIf="loading" class="alert alert-info">Cargando...</div>
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+    <div *ngIf="success" class="alert alert-success">{{ success }}</div>
+  
+    <div class="catalog-tabs">
+      <button [class.active]="activeCatalog === 'ubicaciones'" (click)="setCatalog('ubicaciones')">
+        <i class="fas fa-map-marker-alt"></i>
+        Ubicaciones
+      </button>
+      <button [class.active]="activeCatalog === 'cie'" (click)="setCatalog('cie')">
+        <i class="fas fa-book-medical"></i>
+        CIE
+      </button>
+      <button [class.active]="activeCatalog === 'medicamentos'" (click)="setCatalog('medicamentos')">
+        <i class="fas fa-pills"></i>
+        Medicamentos
+      </button>
+    </div>
+  
+    <div class="catalog-content">
+      <!-- Contenido de Ubicaciones -->
+      <div *ngIf="activeCatalog === 'ubicaciones'">
+        <h3>Gestión de Ubicaciones</h3>
+        <div class="ubicaciones-grid">
+          <!-- Provincias -->
+          <div class="ubicacion-section">
+            <h4>Provincias</h4>
+            <div class="search-box">
+              <input type="text" [(ngModel)]="searchProvincia" placeholder="Buscar provincia...">
+              <button class="btn-add" (click)="showProvinciaForm = true" *ngIf="!showProvinciaForm">
+               Agregar Provincia
+              </button>
+            </div>
+  
+            <!-- Formulario de Provincia -->
+            <form *ngIf="showProvinciaForm" [formGroup]="provinciaForm" (ngSubmit)="onSubmitProvincia()" class="form-section">
+              <input type="text" formControlName="nombre" placeholder="Nombre de la provincia" class="form-control">
+              <div class="form-buttons">
+                <button type="submit" class="btn-primary" [disabled]="!provinciaForm.valid">
+                  {{ editingProvincia ? 'Actualizar' : 'Guardar' }}
+                </button>
+                <button type="button" class="btn-secondary" (click)="cancelProvinciaForm()">
+                  Cancelar
+                </button>
+              </div>
+            </form>
+  
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let provincia of filteredProvincias">
+                        <td>{{ provincia.nombre }}</td>
+                        <td class="actions">
+                            <button class="btn-edit" (click)="editProvincia(provincia)">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-delete" (click)="deleteProvincia(provincia.id)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="filteredProvincias.length === 0">
+                        <td colspan="2" class="no-data">No se encontraron provincias</td>
+                    </tr>
+                </tbody>
+            </table>
+          </div>
+  
+          <!-- Cantones -->
+          <div class="ubicacion-section">
+            <h4>Cantones</h4>
+            <div class="search-box">
+              <input type="text" [(ngModel)]="searchCanton" placeholder="Buscar cantón...">
+              <button class="btn-add" (click)="showCantonForm = true" *ngIf="!showCantonForm">
+                Agregar Cantón
+              </button>
+            </div>
+  
+            <!-- Formulario de Cantón -->
+            <form *ngIf="showCantonForm" [formGroup]="cantonForm" (ngSubmit)="onSubmitCanton()" class="form-section">
+              <select formControlName="provincia_id" class="form-control">
+                <option value="" disabled selected>Seleccione una provincia</option>
+                <option *ngFor="let prov of provincias" [value]="prov.id">{{ prov.nombre }}</option>
+              </select>
+              <input type="text" formControlName="nombre" placeholder="Nombre del cantón" class="form-control">
+              <div class="form-buttons">
+                <button type="submit" class="btn-primary" [disabled]="!cantonForm.valid">
+                  {{ editingCanton ? 'Actualizar' : 'Guardar' }}
+                </button>
+                <button type="button" class="btn-secondary" (click)="cancelCantonForm()">
+                  Cancelar
+                </button>
+              </div>
+            </form>
+  
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Provincia</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let canton of filteredCantones">
+                  <td>{{ canton.nombre }}</td>
+                  <td>{{ canton.Provincia?.nombre }}</td>
+                  <td class="actions">
+                    <button class="btn-edit" (click)="editCanton(canton)">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn-delete" (click)="deleteCanton(canton.id)">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="filteredCantones.length === 0">
+                  <td colspan="3" class="no-data">No se encontraron cantones</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+  
+          <!-- Parroquias -->
+          <div class="ubicacion-section">
+            <h4>Parroquias</h4>
+            <div class="search-box">
+              <input type="text" [(ngModel)]="searchParroquia" placeholder="Buscar parroquia...">
+              <button class="btn-add" (click)="showParroquiaForm = true" *ngIf="!showParroquiaForm">
+                 Agregar Parroquia
+              </button>
+            </div>
+  
+            <!-- Formulario de Parroquia -->
+            <form *ngIf="showParroquiaForm" [formGroup]="parroquiaForm" (ngSubmit)="onSubmitParroquia()" class="form-section">
+              <select formControlName="canton_id" class="form-control">
+                <option value=""  disabled selected>Seleccione un cantón</option>
+                <option *ngFor="let canton of cantones" [value]="canton.id">
+                  {{ canton.nombre }} ({{ canton.Provincia?.nombre }})
+                </option>
+              </select>
+              <input type="text" formControlName="nombre" placeholder="Nombre de la parroquia" class="form-control">
+              <div class="form-buttons">
+                <button type="submit" class="btn-primary" [disabled]="!parroquiaForm.valid">
+                  {{ editingParroquia ? 'Actualizar' : 'Guardar' }}
+                </button>
+                <button type="button" class="btn-secondary" (click)="cancelParroquiaForm()">
+                  Cancelar
+                </button>
+              </div>
+            </form>
+  
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Cantón</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let parroquia of filteredParroquias">
+                  <td>{{ parroquia.nombre }}</td>
+                  <td>{{ parroquia.Canton?.nombre }} ({{ parroquia.Canton?.Provincia?.nombre }})</td>
+                  <td class="actions">
+                    <button class="btn-edit" (click)="editParroquia(parroquia)">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn-delete" (click)="deleteParroquia(parroquia.id)">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="filteredParroquias.length === 0">
+                  <td colspan="3" class="no-data">No se encontraron parroquias</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+  <!-- Contenido de CIE -->
+<div *ngIf="activeCatalog === 'cie'">
+    <h3>Gestión de CIE</h3>
+  
+    <!-- Búsqueda y botón nuevo -->
+    <div class="search-box">
+      <input 
+        type="text" 
+        [(ngModel)]="searchCie10Query"
+        (input)="onSearchCie10()"
+        placeholder="Buscar código CIE..."
+        class="form-control">
+      <button class="btn btn-success" (click)="showCreateCie10Form()">
+        + Nuevo CIE
+      </button>
+    </div>
+
+    <!-- Formulario CIE -->
+    <form *ngIf="showCie10Form" [formGroup]="cie10Form" (ngSubmit)="onCie10Submit()" class="form-section">
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="codigo">Código</label>
+          <input type="text" id="codigo" formControlName="codigo" class="form-control">
+        </div>
+        <div class="form-group col-md-9">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" formControlName="nombre" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="ctsexo_id">Sexo</label>
+          <select id="ctsexo_id" formControlName="ctsexo_id" class="form-control">
+            <option value="">Seleccione</option>
+            <option value="1">Masculino</option>
+            <option value="2">Femenino</option>
+            <option value="3">Ambos</option>
+          </select>
+        </div>
+        
+        <div class="form-group col-md-4">
+          <label>Edad Mínima</label>
+          <div class="input-group">
+            <input type="number" formControlName="edadmin" class="form-control">
+            <select formControlName="unidadedadmin" class="form-control">
+              <option value="D">Días</option>
+              <option value="M">Meses</option>
+              <option value="A">Años</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label>Edad Máxima</label>
+          <div class="input-group">
+            <input type="number" formControlName="edadmax" class="form-control">
+            <select formControlName="unidadedadmax" class="form-control">
+              <option value="D">Días</option>
+              <option value="M">Meses</option>
+              <option value="A">Años</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit" class="btn btn-primary" [disabled]="!cie10Form.valid">
+          {{ editingCie10Id ? 'Actualizar' : 'Guardar' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="cancelCie10Form()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  
+    <!-- Tabla principal de CIE -->
+    <table class="table" *ngIf="!selectedParentId">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Versión</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cie of filteredCie10">
+          <td>{{ cie.codigo }}</td>
+          <td>{{ cie.nombre }}</td>
+          <td>{{ cie.versioncie }}</td>
+          <td>
+            <span class="badge" [ngClass]="{'badge-success': cie.estado === 1}">
+              {{ cie.estado === 1 ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+          <td class="actions">
+            <button class="btn btn-warning btn-sm" (click)="editCie10(cie)" title="Editar">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="deleteCie10(cie.id)" title="Eliminar">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Tabla de subcategorías -->
+    <div *ngIf="selectedParentId" class="subcategories-section">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Subcategorías</h4>
+        <button class="btn btn-secondary" (click)="selectedParentId = null">
+          <i class="fas fa-arrow-left"></i> Volver
+        </button>
+      </div>
+      
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let sub of cie10Subcategories">
+            <td>{{ sub.codigo }}</td>
+            <td>{{ sub.nombre }}</td>
+            <td>
+              <span class="badge" [ngClass]="{'badge-success': sub.estado === 1}">
+                {{ sub.estado === 1 ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td class="actions">
+              <button class="btn btn-warning btn-sm" (click)="editCie10(sub)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-danger btn-sm" (click)="deleteCie10(sub.id)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
+
+    <!-- Contenido de Medicamentos -->
+<div *ngIf="activeCatalog === 'medicamentos'">
+    <h3>Gestión de Medicamentos</h3>
+    
+    <!-- Buscador y botón nuevo -->
+    <div class="search-box">
+      <input 
+        type="text" 
+        [(ngModel)]="searchMedicamentoQuery"
+        (input)="onSearchMedicamentos()"
+        placeholder="Buscar medicamento..."
+        class="form-control">
+      <button class="btn btn-success" (click)="showCreateMedicamentoForm()">
+        <i class="fas fa-plus"></i> Nuevo Medicamento
+      </button>
+    </div>
+  
+    <!-- Formulario de Medicamento -->
+    <form *ngIf="showMedicamentoForm" [formGroup]="medicamentoForm" (ngSubmit)="onMedicamentoSubmit()" class="form-section">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="nombre_generico">Nombre Genérico *</label>
+          <input type="text" id="nombre_generico" formControlName="nombre_generico" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="nombre_comercial">Nombre Comercial</label>
+          <input type="text" id="nombre_comercial" formControlName="nombre_comercial" class="form-control">
+        </div>
+      </div>
+  
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="forma_farmaceutica">Forma Farmacéutica *</label>
+          <input type="text" id="forma_farmaceutica" formControlName="forma_farmaceutica" class="form-control">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="concentracion">Concentración *</label>
+          <input type="text" id="concentracion" formControlName="concentracion" class="form-control">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="via_administracion">Vía de Administración *</label>
+          <input type="text" id="via_administracion" formControlName="via_administracion" class="form-control">
+        </div>
+      </div>
+  
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="categoria">Categoría</label>
+          <input type="text" id="categoria" formControlName="categoria" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="estado">Estado</label>
+          <select id="estado" formControlName="estado" class="form-control">
+            <option [ngValue]="true">Activo</option>
+            <option [ngValue]="false">Inactivo</option>
+          </select>
+        </div>
+      </div>
+  
+      <div class="form-buttons">
+        <button type="submit" class="btn btn-primary" [disabled]="!medicamentoForm.valid">
+          {{ editingMedicamentoId ? 'Actualizar' : 'Guardar' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="cancelMedicamentoForm()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  
+    <!-- Tabla de Medicamentos -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre Genérico</th>
+          <th>Nombre Comercial</th>
+          <th>Forma Farmacéutica</th>
+          <th>Concentración</th>
+          <th>Vía Admin.</th>
+          <th>Categoría</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let medicamento of filteredMedicamentos">
+          <td>{{ medicamento.nombre_generico }}</td>
+          <td>{{ medicamento.nombre_comercial }}</td>
+          <td>{{ medicamento.forma_farmaceutica }}</td>
+          <td>{{ medicamento.concentracion }}</td>
+          <td>{{ medicamento.via_administracion }}</td>
+          <td>{{ medicamento.categoria }}</td>
+          <td>
+            <span class="badge" [ngClass]="{'badge-success': medicamento.estado, 'badge-danger': !medicamento.estado}">
+              {{ medicamento.estado ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+          <td class="actions">
+            <button class="btn btn-warning btn-sm" (click)="editMedicamento(medicamento)" title="Editar">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="deleteMedicamento(medicamento.id)" title="Eliminar">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="filteredMedicamentos.length === 0">
+          <td colspan="8" class="text-center">No se encontraron medicamentos</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    </div>
+  </div>

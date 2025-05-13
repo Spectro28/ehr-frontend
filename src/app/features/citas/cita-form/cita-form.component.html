@@ -1,0 +1,159 @@
+<div class="cita-form-container">
+  <h2>{{ isEditing ? 'Editar' : 'Nueva' }} Cita</h2>
+
+  <div *ngIf="loading" class="loading">
+    Cargando datos...
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <form [formGroup]="citaForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+    <!-- Paciente -->
+    <div class="form-group">
+      <label for="pacienteBuscador">Buscar Paciente:</label>
+      <div class="search-container">
+        <input
+          type="text"
+          id="pacienteBuscador"
+          formControlName="pacienteBuscador"
+          placeholder="Ingrese nombre o cédula del paciente..."
+          autocomplete="off"
+          [class.selected]="citaForm.get('pacienteId')?.value"
+          class="form-control"
+        >
+        
+        <!-- Resultados de búsqueda -->
+        <div class="search-results" *ngIf="showResults && pacientesFiltrados.length > 0">
+          <div 
+            class="search-result-item" 
+            *ngFor="let paciente of pacientesFiltrados"
+            (click)="selectPaciente(paciente)"
+          >
+            <span class="patient-name">
+              {{ paciente.primer_nombre }} {{ paciente.apellido_paterno }}
+            </span>
+            <span class="cedula">{{ paciente.cedula }}</span>
+          </div>
+        </div>
+
+        <!-- Mensaje cuando no hay resultados -->
+        <div class="no-results" 
+             *ngIf="showResults && 
+                    pacientesFiltrados.length === 0 && 
+                    citaForm.get('pacienteBuscador')?.value?.length >= 3 &&
+                    !citaForm.get('pacienteId')?.value">
+          No se encontraron pacientes
+          <button 
+            class="btn btn-success btn-sm" 
+            (click)="agregarPaciente()">
+            Agregar Paciente
+          </button>
+        </div>
+      </div>
+
+      <div class="error-message" 
+           *ngIf="citaForm.get('pacienteId')?.touched && 
+                  citaForm.get('pacienteId')?.invalid">
+        Debe seleccionar un paciente
+      </div>
+    </div>
+
+    <!-- Especialidad -->
+    <div class="form-group">
+      <label for="especialidad">Especialidad:</label>
+      <select 
+        id="especialidad" 
+        formControlName="especialidad"
+        class="form-control"
+      >
+        <option value="">Seleccione una especialidad</option>
+        <option *ngFor="let esp of especialidades" [value]="esp">
+          {{ esp }}
+        </option>
+      </select>
+      <div class="error-message" 
+           *ngIf="citaForm.get('especialidad')?.touched && 
+                  citaForm.get('especialidad')?.invalid">
+        Seleccione una especialidad
+      </div>
+    </div>
+
+    <!-- Doctor -->
+    <div class="form-group">
+      <label for="doctor">Doctor:</label>
+      <select 
+        id="doctor" 
+        formControlName="doctorId"
+        class="form-control"
+        [disabled]="!citaForm.get('especialidad')?.value"
+      >
+        <option value="">Seleccione un doctor</option>
+        <option *ngFor="let doctor of doctoresFiltrados" [value]="doctor.id">
+          {{ doctor.username }}
+        </option>
+      </select>
+      <div class="error-message" 
+           *ngIf="citaForm.get('doctorId')?.touched && 
+                  citaForm.get('doctorId')?.invalid">
+        Seleccione un doctor
+      </div>
+    </div>
+
+    <!-- Consultorio y Horarios -->
+    <div class="form-group" *ngIf="consultorioSeleccionado">
+      <div class="consultorio-info">
+        <label>Consultorio asignado:</label>
+        <div class="form-control-static">
+          {{ consultorioAsignado }}
+        </div>
+      </div>
+
+      <div class="horarios-section">
+        <h4>Horarios de Atención Disponibles</h4>
+        <app-cita-horario-selector
+          [consultorio]="consultorioSeleccionado"
+          [citasExistentes]="citasExistentes"
+          (horarioSeleccionado)="onHorarioSeleccionado($event)">
+        </app-cita-horario-selector>
+      </div>
+    </div>
+
+    <!-- Fecha y Hora Seleccionadas -->
+    <div class="form-group" *ngIf="citaForm.get('fecha')?.value && citaForm.get('hora')?.value">
+      <div class="horario-seleccionado">
+        <label>Horario seleccionado:</label>
+        <div class="form-control-static">
+          Fecha: {{ citaForm.get('fecha')?.value | date:'dd/MM/yyyy' }} - 
+          Hora: {{ citaForm.get('hora')?.value }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Notas -->
+    <div class="form-group">
+      <label for="notas">Notas:</label>
+      <textarea 
+        id="notas" 
+        formControlName="notas" 
+        rows="3"
+        class="form-control"
+        placeholder="Agregue notas adicionales si es necesario">
+      </textarea>
+    </div>
+
+    <!-- Botones -->
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" (click)="cancelar()">
+        Cancelar
+      </button>
+      <button 
+        type="submit" 
+        [disabled]="!citaForm.valid || loading"
+        class="btn-guardar">
+        {{ isEditing ? 'Actualizar' : 'Crear' }} Cita
+      </button>
+    </div>
+  </form>
+</div>

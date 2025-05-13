@@ -1,0 +1,41 @@
+<div class="horarios-container">
+  <div class="horarios-grid">
+    <div *ngFor="let horario of horariosSemana" class="horario-card">
+      <div class="horario-header" [class.active]="diaSeleccionado === horario">
+        <div class="fecha-info">
+          <span class="dia-nombre">{{ horario.dia }}</span>
+          <span class="fecha">{{ horario.fecha | date:'dd/MM/yyyy' }}</span>
+        </div>
+        <button type="button" 
+                class="toggle-btn" 
+                [class.active]="diaSeleccionado === horario"
+                (click)="seleccionarDia(horario)">
+          Seleccionar
+        </button>
+      </div>
+
+      <div class="horario-content" *ngIf="diaSeleccionado === horario">
+        <div class="turnos-disponibles">
+          <h5>Turnos disponibles:</h5>
+          <div class="turnos-grid">
+            <div *ngFor="let slot of horasDisponibles" 
+                 class="turno-wrapper"
+                 [class.ocupado]="!slot.disponible">
+              <button type="button"
+                      class="turno-btn"
+                      [class.seleccionado]="horaSeleccionada === slot.hora"
+                      [class.ocupado]="!slot.disponible"
+                      [disabled]="!slot.disponible"
+                      (click)="seleccionarHora(slot.hora)">
+                {{ slot.hora }}
+              </button>
+              <div *ngIf="!slot.disponible" class="estado-ocupado">
+                OCUPADO
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

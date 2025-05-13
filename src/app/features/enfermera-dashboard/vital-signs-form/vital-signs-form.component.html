@@ -1,0 +1,205 @@
+<div class="container mt-4">
+    <div class="form-header">
+      <h2>
+        <i class="fas fa-heartbeat me-2"></i>
+        {{ isEditMode ? 'Editar' : 'Registrar' }} Signos Vitales
+      </h2>
+    </div>
+
+    <div class="patient-info-card mb-4">
+      <div class="patient-header">
+        <i class="fas fa-user-circle fa-3x text-primary"></i>
+        <div class="patient-details">
+          <h3 class="patient-name">{{ pacienteNombre || 'No disponible' }}</h3>
+          <div class="patient-id">
+            <span class="id-label">Cédula:</span>
+            <span class="id-number">{{ pacienteCedula || 'No disponible' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Mensajes de estado -->
+    <div *ngIf="loading" class="alert alert-info d-flex align-items-center">
+      <i class="fas fa-spinner fa-spin me-2"></i>
+      Guardando datos...
+    </div>
+    
+    <div *ngIf="error" class="alert alert-danger d-flex align-items-center">
+      <i class="fas fa-exclamation-circle me-2"></i>
+      {{ error }}
+    </div>
+    
+    <div *ngIf="success" class="alert alert-success d-flex align-items-center">
+      <i class="fas fa-check-circle me-2"></i>
+      {{ success }}
+    </div>
+  
+    <!-- Formulario -->
+    <form [formGroup]="vitalSignsForm" (ngSubmit)="onSubmit()" class="mt-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <!-- Columna izquierda -->
+            <div class="col-md-6">
+              <div class="form-group mb-4">
+                <label for="fecha_medicion" class="form-label required">
+                  <i class="far fa-calendar-alt me-2"></i>
+                  Fecha de Medición
+                </label>
+                <input type="date" 
+                       class="form-control" 
+                       id="fecha_medicion" 
+                       formControlName="fecha_medicion"
+                       [class.is-invalid]="vitalSignsForm.get('fecha_medicion')?.invalid && vitalSignsForm.get('fecha_medicion')?.touched">
+                <div class="invalid-feedback">
+                  <i class="fas fa-exclamation-circle me-1"></i>
+                  La fecha de medición es requerida
+                </div>
+              </div>
+  
+              <div class="form-group mb-4">
+                <label for="temperatura" class="form-label required">
+                  <i class="fas fa-thermometer-half me-2"></i>
+                  Temperatura (°C)
+                </label>
+                <div class="input-group">
+                  <input type="number" 
+                         class="form-control" 
+                         id="temperatura" 
+                         formControlName="temperatura"
+                         step="0.1"
+                         [class.is-invalid]="vitalSignsForm.get('temperatura')?.invalid && vitalSignsForm.get('temperatura')?.touched">
+                  <span class="input-group-text">°C</span>
+                  <div class="invalid-feedback">
+                    La temperatura debe estar entre 30°C y 45°C
+                  </div>
+                </div>
+              </div>
+  
+              <div class="form-group mb-4">
+                <label for="presion_arterial" class="form-label required">
+                  <i class="fas fa-heart me-2"></i>
+                  Presión Arterial
+                </label>
+                <input type="text" 
+                       class="form-control" 
+                       id="presion_arterial" 
+                       formControlName="presion_arterial"
+                       placeholder="120/80"
+                       [class.is-invalid]="vitalSignsForm.get('presion_arterial')?.invalid && vitalSignsForm.get('presion_arterial')?.touched">
+                <div class="invalid-feedback">
+                  Formato inválido. Use el formato: 120/80
+                </div>
+              </div>
+  
+              <div class="form-group mb-4">
+                <label for="pulso" class="form-label required">
+                  <i class="fas fa-heartbeat me-2"></i>
+                  Pulso (lpm)
+                </label>
+                <div class="input-group">
+                  <input type="number" 
+                         class="form-control" 
+                         id="pulso" 
+                         formControlName="pulso"
+                         [class.is-invalid]="vitalSignsForm.get('pulso')?.invalid && vitalSignsForm.get('pulso')?.touched">
+                  <span class="input-group-text">lpm</span>
+                  <div class="invalid-feedback">
+                    El pulso debe estar entre 40 y 200 lpm
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Columna derecha -->
+            <div class="col-md-6">
+              <div class="form-group mb-4">
+                <label for="frecuencia_respiratoria" class="form-label required">
+                  <i class="fas fa-lungs me-2"></i>
+                  Frecuencia Respiratoria (rpm)
+                </label>
+                <div class="input-group">
+                  <input type="number" 
+                         class="form-control" 
+                         id="frecuencia_respiratoria" 
+                         formControlName="frecuencia_respiratoria"
+                         [class.is-invalid]="vitalSignsForm.get('frecuencia_respiratoria')?.invalid && vitalSignsForm.get('frecuencia_respiratoria')?.touched">
+                  <span class="input-group-text">rpm</span>
+                  <div class="invalid-feedback">
+                    La frecuencia respiratoria debe estar entre 8 y 40 rpm
+                  </div>
+                </div>
+              </div>
+  
+              <div class="form-group mb-4">
+                <label for="peso" class="form-label required">
+                  <i class="fas fa-weight me-2"></i>
+                  Peso (kg)
+                </label>
+                <div class="input-group">
+                  <input type="number" 
+                         class="form-control" 
+                         id="peso" 
+                         formControlName="peso"
+                         step="0.1"
+                         [class.is-invalid]="vitalSignsForm.get('peso')?.invalid && vitalSignsForm.get('peso')?.touched">
+                  <span class="input-group-text">kg</span>
+                  <div class="invalid-feedback">
+                    El peso debe ser mayor a 0
+                  </div>
+                </div>
+              </div>
+  
+              <div class="form-group mb-4">
+                <label for="talla" class="form-label required">
+                  <i class="fas fa-ruler-vertical me-2"></i>
+                  Talla (cm)
+                </label>
+                <div class="input-group">
+                  <input type="number" 
+                         class="form-control" 
+                         id="talla" 
+                         formControlName="talla"
+                         [class.is-invalid]="vitalSignsForm.get('talla')?.invalid && vitalSignsForm.get('talla')?.touched">
+                  <span class="input-group-text">cm</span>
+                  <div class="invalid-feedback">
+                    La talla debe estar entre 30 y 250 cm
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Campo IMC de solo lectura -->
+              <div class="form-group mb-4">
+                <label class="form-label">
+                  <i class="fas fa-calculator me-2"></i>
+                  IMC (Calculado)
+                </label>
+                <input type="text" 
+                       class="form-control" 
+                       [value]="calculateIMC() | number:'1.2-2'"
+                       readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Botones de acción -->
+      <div class="d-flex justify-content-between mt-4">
+        <button type="button" 
+                class="btn btn-secondary" 
+                routerLink="/enfermera">
+          <i class="fas fa-times me-2"></i>
+          Cancelar
+        </button>
+        
+        <button type="submit" 
+        class="btn btn-primary" 
+        [disabled]="vitalSignsForm.invalid || loading">
+  <i class="fas fa-save me-2"></i>
+  {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+</button>
+      </div>
+    </form>
+  </div>

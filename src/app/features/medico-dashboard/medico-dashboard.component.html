@@ -1,0 +1,180 @@
+<nav class="custom-navbar">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <span class="navbar-brand">
+          <img src="/assets/logo.png" alt="Logo" class="navbar-logo">
+          <div>
+            Sistema de Gestión Médica
+            <p class="navbar-subtitle">Panel Doctor</p>
+          </div>
+        </span>
+      </div>
+      <div class="navbar-links">
+        <a class="nav-link" [routerLink]="['/doctor']" routerLinkActive="active">
+            <i class="fas fa-stethoscope"></i>
+                Evoluciones
+          </a>
+        <a class="nav-link" [routerLink]="['/doctor/pacientes']" routerLinkActive="active">
+          <i class="fas fa-procedures"></i>
+          Pacientes
+        </a>
+        <button class="btn-cerrar-sesion" (click)="cerrarSesion()">
+          <i class="fas fa-sign-out-alt"></i>
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
+  </nav>
+<div class="container mt-4">
+    <!-- Filtros
+    <div class="filter-section">
+        <form [formGroup]="filterForm" class="filter-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="busqueda">Buscar Paciente</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="busqueda"
+                            formControlName="busqueda"
+                            placeholder="Nombre o cédula">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fecha">Fecha</label>
+                        <input
+                            type="date"
+                            class="form-control"
+                            id="fecha"
+                            formControlName="fecha">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div> -->
+
+    <!-- Mensajes de estado -->
+    <div *ngIf="loading" class="alert alert-info">
+        <i class="fas fa-spinner fa-spin me-2"></i>
+        Cargando pacientes...
+    </div>
+
+    <div *ngIf="error" class="alert alert-danger">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        {{ error }}
+    </div>
+
+    <!-- Sección de Pacientes Sin Evolución -->
+    <div class="card mb-4">
+        <div class="card-header bg-warning">
+            <h4 class="mb-0 text-white">
+                <i class="fas fa-user-clock me-2"></i>
+                Pacientes Pendientes de Evolución
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div *ngFor="let paciente of pacientesSinEvolucion" class="col-md-6 col-lg-4 mb-4">
+                    <div class="patient-card">
+                        <div class="patient-header">
+                            <i class="fas fa-user-circle fa-2x text-warning"></i>
+                            <div class="patient-info">
+                                <h5>{{ paciente.primer_nombre }} {{ paciente.apellido_paterno }}</h5>
+                                <p class="cedula">Cédula: {{ paciente.cedula }}</p>
+                            </div>
+                        </div>
+                        <div class="patient-actions mt-3">
+                            <button class="btn btn-primary w-100" (click)="crearEvolucion(paciente.id)">
+                                <i class="fas fa-plus-circle me-2"></i>
+                                Nueva Evolución
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="pacientesSinEvolucion.length === 0" class="col-12">
+                    <p class="text-muted text-center">No hay pacientes pendientes de evolución</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de Pacientes Con Evolución -->
+    <div class="card">
+        <div class="card-header bg-success">
+            <h4 class="mb-0 text-white">
+                <i class="fas fa-user-check me-2"></i>
+                Pacientes con Evoluciones
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div *ngFor="let paciente of pacientesConEvolucion" class="col-md-6 col-lg-4 mb-4">
+                    <div class="patient-card">
+                        <div class="patient-header">
+                            <i class="fas fa-user-circle fa-2x text-success"></i>
+                            <div class="patient-info">
+                                <h5>{{ paciente.primer_nombre }} {{ paciente.apellido_paterno }}</h5>
+                                <p class="cedula">Cédula: {{ paciente.cedula }}</p>
+                                <span class="badge bg-info">
+                                    {{ paciente.evoluciones?.length || 0 }} evoluciones
+                                </span>
+                            </div>
+                        </div>
+                        <div class="patient-actions mt-3">
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-info" (click)="verEvoluciones(paciente.id)">
+                                    <i class="fas fa-eye me-2"></i>
+                                    Ver Evoluciones
+                                </button>
+                                <button class="btn btn-success" (click)="crearEvolucion(paciente.id)">
+                                    <i class="fas fa-plus-circle me-2"></i>
+                                    Nueva Evolución
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="pacientesConEvolucion.length === 0" class="col-12">
+                    <p class="text-muted text-center">No hay pacientes con evoluciones registradas</p>
+                </div>
+            </div>
+            <div class="card mt-4">
+                <div class="card-header bg-info">
+                    <h4 class="mb-0 text-white">
+                        <i class="fas fa-users me-2"></i>
+                        Todos los Pacientes con Evolución
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div *ngFor="let paciente of pacientesOtrosMedicos" class="col-md-6 col-lg-4 mb-4">
+                            <div class="patient-card">
+                                <div class="patient-header">
+                                    <i class="fas fa-user-circle fa-2x text-info"></i>
+                                    <div class="patient-info">
+                                        <h5>{{ paciente.primer_nombre }} {{ paciente.apellido_paterno }}</h5>
+                                        <p class="cedula">Cédula: {{ paciente.cedula }}</p>
+                                        <span class="badge bg-info">
+                                            {{ paciente.evoluciones?.length || 0 }} evoluciones
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="patient-actions mt-3">
+                                    <button class="btn btn-info w-100" (click)="verEvolucionesOtroMedico(paciente.id)">
+                                        <i class="fas fa-eye me-2"></i>
+                                        Ver Evoluciones
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="pacientesOtrosMedicos.length === 0" class="col-12">
+                            <p class="text-muted text-center">No hay pacientes de otros médicos disponibles</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

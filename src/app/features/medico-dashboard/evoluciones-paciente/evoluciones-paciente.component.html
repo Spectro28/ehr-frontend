@@ -1,0 +1,191 @@
+<nav class="custom-navbar">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <span class="navbar-brand">
+        <img src="/assets/logo.png" alt="Logo" class="navbar-logo">
+        <div>
+          Sistema de Gestión Médica
+          <p class="navbar-subtitle">Panel Doctor</p>
+        </div>
+      </span>
+    </div>
+    <div class="navbar-links">
+      <a class="nav-link" [routerLink]="['/doctor']" routerLinkActive="active">
+        <i class="fas fa-stethoscope"></i>
+            Evoluciones
+      </a>
+      <a class="nav-link" [routerLink]="['/doctor/pacientes']" routerLinkActive="active">
+        <i class="fas fa-procedures"></i>
+        Pacientes
+      </a>
+      <button class="btn-cerrar-sesion" (click)="cerrarSesion()">
+        <i class="fas fa-sign-out-alt"></i>
+        Cerrar Sesión
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <!-- Cabecera con información del paciente -->
+  <div class="card mb-4" *ngIf="paciente">
+    <div class="card-header bg-primary text-white">
+      <div class="d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">
+          {{ paciente.primer_nombre }} {{ paciente.apellido_paterno }}
+        </h4>
+        <button class="btn btn-light" (click)="crearNuevaEvolucion()">
+          <i class="fas fa-plus-circle"></i> Nueva Evolución
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Acordeón de evoluciones -->
+  <div class="accordion mb-4" id="accordionEvoluciones">
+    <div class="accordion-item" *ngFor="let evolucion of evoluciones; let i = index">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" 
+                data-bs-toggle="collapse" 
+                [attr.data-bs-target]="'#collapse' + i">
+          <div class="d-flex justify-content-between w-100">
+            <span>
+              <i class="fas fa-calendar-alt me-2"></i>
+              {{ evolucion.fecha | date:'dd/MM/yyyy HH:mm' }} - 
+              Dr. {{ evolucion.medico?.username }}
+            </span>
+          </div>
+        </button>
+      </h2>
+      <div [id]="'collapse' + i" class="accordion-collapse collapse" 
+           data-bs-parent="#accordionEvoluciones">
+        <div class="accordion-body">
+          <!-- Contenido de la evolución -->
+          <div class="evolution-content">
+            <div class="content-section">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <h6>Motivo de Consulta:</h6>
+                  <p>{{ evolucion.motivo_consulta }}</p>
+                </div>
+                <div class="col-md-6">
+                  <h6>Enfermedad Actual:</h6>
+                  <p>{{ evolucion.enfermedad_actual }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Signos Vitales -->
+            <div class="content-section" *ngIf="evolucion.signosVitales">
+              <h6>Signos Vitales:</h6>
+              <div class="vital-signs-grid">
+                <div class="vital-sign-item">
+                  <span class="vital-label">Temperatura:</span>
+                  <span class="vital-value">{{ evolucion.signosVitales.temperatura }}°C</span>
+                </div>
+                <div class="vital-sign-item">
+                  <span class="vital-label">Presión Arterial:</span>
+                  <span class="vital-value">{{ evolucion.signosVitales.presion_arterial }}</span>
+                </div>
+                <div class="vital-sign-item">
+                  <span class="vital-label">Frec. Respiratoria:</span>
+                  <span class="vital-value">{{ evolucion.signosVitales.frecuencia_respiratoria }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Diagnósticos -->
+            <div class="content-section" *ngIf="evolucion.diagnosticos?.length">
+              <h6>Diagnósticos:</h6>
+              <ul class="list-group">
+                <li class="list-group-item" *ngFor="let diagnostico of evolucion.diagnosticos">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <span class="badge bg-primary me-2">{{ diagnostico.tipo }}</span>
+                      <strong>{{ diagnostico.cie?.CODIGO || diagnostico.cie?.codigo }}</strong> - 
+                      {{ diagnostico.cie?.NOMBRE || diagnostico.cie?.nombre }}
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Prescripciones -->
+            <div class="content-section" *ngIf="evolucion.prescripciones?.length">
+              <h6>Prescripciones:</h6>
+              <ul class="list-group">
+                <li class="list-group-item" *ngFor="let prescripcion of evolucion.prescripciones">
+                  <div class="prescription-item">
+                    <strong>{{ prescripcion.nombre_generico }}</strong>
+                    <span class="prescription-details">{{ prescripcion.dosis }}</span>
+                    <small class="text-muted">{{ prescripcion.indicaciones_adicionales }}</small>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Botones de Acciones -->
+            <div class="action-buttons">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button *ngIf="evolucion.puedeEditar" 
+                          class="btn btn-warning btn-sm" 
+                          (click)="editarEvolucion(evolucion.id)">
+                    <i class="fas fa-edit"></i> Editar
+                  </button>
+                  <button *ngIf="evolucion.puedeEditar" 
+                          class="btn btn-danger btn-sm" 
+                          (click)="eliminarEvolucion(evolucion.id)">
+                    <i class="fas fa-trash"></i> Eliminar
+                  </button>
+                  
+                  <!-- Dropdown para documentos -->
+                  <div class="dropdown">
+                    <button class="btn btn-info btn-sm dropdown-toggle" 
+                            type="button" 
+                            data-bs-toggle="dropdown">
+                      <i class="fas fa-file-medical"></i> Documentos
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <button class="dropdown-item" 
+                                (click)="generarRecetaPDF(evolucion)">
+                          <i class="fas fa-prescription"></i> Receta Médica
+                        </button>
+                      </li>
+                      <li>
+                        <button class="dropdown-item" 
+                                (click)="abrirModalCertificado(evolucion)">
+                          <i class="fas fa-certificate"></i> Certificado Médico
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <!-- Botón Ver más -->
+                <button class="btn btn-link btn-sm text-primary" 
+                        (click)="verMasDetalles(evolucion.id)">
+                  <i class="fas fa-eye"></i> Ver más
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje cuando no hay evoluciones -->
+  <div *ngIf="!loading && evoluciones.length === 0" class="alert alert-info">
+    <i class="fas fa-info-circle me-2"></i>
+    No hay evoluciones registradas para este paciente.
+  </div>
+
+  <!-- Botón volver -->
+  <div class="footer-actions">
+    <button class="btn btn-secondary" (click)="volver()">
+      <i class="fas fa-arrow-left"></i> Volver
+    </button>
+  </div>
+</div>

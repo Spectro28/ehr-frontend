@@ -1,0 +1,6 @@
+<!-- Mantén tu navbar existente y solo agrega la nueva opción -->
+<li class="nav-item" *ngIf="isSecretary()">
+    <a class="nav-link" routerLink="/patients" routerLinkActive="active">
+      Gestión de Pacientes
+    </a>
+  </li>

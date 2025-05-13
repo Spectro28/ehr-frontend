@@ -1,0 +1,158 @@
+.custom-navbar {
+  background: url('/assets/navbar_admin.png') no-repeat center center;
+  background-size: cover;
+  padding: 1rem;
+  margin-left: -10px;
+  margin-right: -7px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: relative;
+  padding-top: 5px;
+}
+
+.custom-navbar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: none;
+  z-index: 1;
+}
+
+.container-fluid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+
+.navbar-brand {
+  color: #3D539F;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size: 1.4rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+  margin-left: -10px;
+  margin-top: 20px; /* Ajusta según lo necesites */
+
+}
+
+.navbar-subtitle {
+  font-size: 1rem; /* Tamaño más pequeño */
+  color: #6b7280; /* Un gris más suave */
+  margin-top: -2px; /* Ajusta la separación */
+  margin-left: 3.5em;
+  display: block; /* Asegura que esté debajo */
+}
+
+
+
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.nav-link {
+  color: #3D539F;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: #E61B48;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.nav-link:hover {
+  transform: translateY(-1px);
+}
+
+/* Nuevo estilo para el botón de cerrar sesión */
+.btn-cerrar-sesion {
+  background-color: transparent;
+  color: #E61B48;
+  border: 2px solid #E61B48;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cerrar-sesion i {
+  font-size: 1.2rem;
+}
+
+.btn-cerrar-sesion:hover {
+  background-color: #E61B48;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(230, 27, 72, 0.2);
+}
+
+.navbar-logo {
+  width: 150px;
+  height: auto;
+  margin-right: 10px;
+  display: inline-block;
+  margin-left: 0.7em;
+  cursor: pointer;
+  margin-top: -15px;
+}
+
+@media (max-width: 768px) {
+  .container-fluid {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-link {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .btn-cerrar-sesion {
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+}

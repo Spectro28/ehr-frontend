@@ -1,0 +1,58 @@
+<div class="horarios-container">
+  <h4>Horarios de Atención</h4>
+
+  <!-- Formulario para agregar nuevo horario -->
+  <div class="nuevo-horario-form">
+    <div class="form-group">
+      <label>Fecha:</label>
+      <input type="date" 
+             [(ngModel)]="nuevoHorario.fecha"
+             (ngModelChange)="onFechaChange($event)"
+             [min]="fechaMinima"
+             class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Día:</label>
+      <input type="text" 
+             [value]="nuevoHorario.dia"
+             class="form-control" 
+             readonly>
+    </div>
+
+    <div class="form-group">
+      <label>Hora de inicio:</label>
+      <input type="time" 
+             [(ngModel)]="nuevoHorario.horaInicio" 
+             class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Hora de fin:</label>
+      <input type="time" 
+             [(ngModel)]="nuevoHorario.horaFin" 
+             class="form-control">
+    </div>
+
+    <button (click)="agregarHorario($event)" class="btn-agregar">
+      Agregar Horario
+    </button>
+    <div *ngIf="mensajeError" class="mensaje-error">
+      {{ mensajeError }}
+    </div>
+  </div>
+
+  <!-- Lista de horarios -->
+  <div class="horarios-lista" *ngIf="horariosLista.length > 0">
+    <h5>Horarios configurados:</h5>
+    <div *ngFor="let horario of horariosLista; let i = index" class="horario-item">
+      <span class="horario-info">
+        <strong>{{horario.dia}}</strong> - {{formatearFecha(horario.fecha)}}: 
+        <span class="horario-horas">{{horario.horaInicio}} - {{horario.horaFin}}</span>
+      </span>
+      <button class="btn-eliminar" (click)="eliminarHorario(i)">
+        Eliminar
+      </button>
+    </div>
+  </div>
+</div>

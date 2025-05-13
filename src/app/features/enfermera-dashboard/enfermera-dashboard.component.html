@@ -1,0 +1,147 @@
+<!-- enfermera-dashboard.component.html -->
+<nav class="custom-navbar">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <span class="navbar-brand">
+        <img src="/assets/logo.png" alt="Logo" class="navbar-logo">
+        <div>
+          Sistema de Gestión Médica
+          <p class="navbar-subtitle">Panel Enfermera</p>
+        </div>
+      </span>
+    </div>
+    <div class="navbar-links">
+      <button class="btn-cerrar-sesion" (click)="cerrarSesion()">
+        <i class="fas fa-sign-out-alt"></i>
+        Cerrar Sesión
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+
+  <!-- Mensajes de estado -->
+  <div *ngIf="loading" class="alert alert-info">Cargando citas...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <!-- Sección de citas pendientes -->
+  <div class="card mt-4">
+    <div class="card-header">
+      <h3 class="card-title">Citas Pendientes</h3>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive" *ngIf="!loading && !error && pendingAppointments.length > 0">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Paciente</th>
+              <th>Cédula</th>
+              <th>Consultorio</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cita of pendingAppointments">
+              <td>{{ cita.fecha | date:'dd/MM/yyyy' }}</td>
+              <td>{{ cita.hora }}</td>
+              <td>{{ cita.paciente?.primer_nombre }} {{ cita.paciente?.apellido_paterno }}</td>
+              <td>{{ cita.paciente?.cedula }}</td>
+              <td>{{ cita.consultorio?.numero }}</td>
+              <td>
+                <a [routerLink]="['/enfermera/vital-signs/new']"
+                   [queryParams]="{citaId: cita.id}"
+                   class="btn btn-primary"
+                   (click)="logCitaId(cita)">
+                    Tomar Signos Vitales
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mensaje cuando no hay citas pendientes -->
+      <div *ngIf="!loading && !error && pendingAppointments.length === 0" class="alert alert-info">
+        No hay citas pendientes para toma de signos vitales.
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección de Signos Vitales Registrados -->
+  <div class="card mt-4">
+    <div class="card-header">
+      <h3 class="card-title">Registros de Signos Vitales</h3>
+    </div>
+    <div class="card-body">
+     <!-- Formulario de filtros -->
+<form [formGroup]="filterForm" (ngSubmit)="onFilter()" class="filter-form">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="paciente">
+          <i class="far fa-user me-2"></i>Paciente
+        </label>
+        <input type="text" class="form-control" id="paciente" formControlName="paciente"
+               placeholder="Buscar por nombre o cédula">
+      </div>
+    </div>
+  </div>
+</form>
+
+      <!-- Tabla de registros -->
+      <div class="table-responsive" *ngIf="!loadingVitalSigns && completedVitalSigns.length > 0">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Paciente</th>
+              <th>Temperatura</th>
+              <th>Presión Arterial</th>
+              <th>Pulso</th>
+              <th>Frec. Respiratoria</th>
+              <th>Peso</th>
+              <th>Talla</th>
+              <th>IMC</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of completedVitalSigns">
+              <td>{{ record.fecha_medicion | date:'dd/MM/yyyy' }}</td>
+              <td>{{ record.paciente?.primer_nombre }} {{ record.paciente?.apellido_paterno }}</td>
+              <td data-label="Temperatura" class="numeric-value">{{ record.temperatura }}°C</td>
+              <td data-label="Presión Arterial" class="numeric-value">{{ record.presion_arterial }}</td>
+              <td data-label="Pulso" class="numeric-value">{{ record.pulso }}</td>
+              <td data-label="Frecuencia Respiratoria" class="numeric-value">{{ record.frecuencia_respiratoria }}</td>
+              <td data-label="Peso" class="numeric-value">{{ record.peso }} kg</td>
+              <td data-label="Talla" class="numeric-value">{{ record.talla }} cm</td>
+              <td data-label="IMC" class="numeric-value">{{ record.imc | number:'1.1-1' }}</td>
+              <td data-label="Acciones" class="action-buttons">
+                <a [routerLink]="['/enfermera/vital-signs', record.id, 'edit']"
+                   class="btn btn-sm btn-outline-primary me-2"
+                   title="Editar registro">
+                  <i class="fas fa-edit"></i>
+                  Editar
+                </a>
+                <button (click)="deleteRecord(record.id)"
+                        class="btn btn-sm btn-outline-danger"
+                        title="Eliminar registro">
+                  <i class="fas fa-trash"></i>
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mensaje cuando no hay registros -->
+      <div *ngIf="!loadingVitalSigns && completedVitalSigns.length === 0" class="alert alert-info">
+        No se encontraron registros de signos vitales.
+      </div>
+    </div>
+  </div>
+</div>

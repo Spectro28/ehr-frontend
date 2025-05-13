@@ -1,0 +1,77 @@
+<div class="container mt-4">
+    <h2>Registros de Signos Vitales</h2>
+  
+    <!-- Formulario de filtros -->
+    <form [formGroup]="filterForm" (ngSubmit)="onFilter()" class="mb-4">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="fecha">Fecha</label>
+            <input type="date" class="form-control" id="fecha" formControlName="fecha">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="paciente">Paciente</label>
+            <input type="text" class="form-control" id="paciente" formControlName="paciente" placeholder="Buscar por nombre o cédula">
+          </div>
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+          <button type="submit" class="btn btn-primary">Filtrar</button>
+        </div>
+      </div>
+    </form>
+  
+    <!-- Mensajes de estado -->
+    <div *ngIf="loading" class="alert alert-info">Cargando registros...</div>
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  
+    <!-- Tabla de registros -->
+    <div class="table-responsive" *ngIf="!loading && !error && vitalSigns.length > 0">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Paciente</th>
+            <th>Temperatura</th>
+            <th>Presión Arterial</th>
+            <th>Pulso</th>
+            <th>Frec. Respiratoria</th>
+            <th>Peso</th>
+            <th>Talla</th>
+            <th>IMC</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let record of vitalSigns">
+            <td>{{ record.fecha_medicion | date:'dd/MM/yyyy' }}</td>
+            <td>{{ record.paciente?.primer_nombre }} {{ record.paciente?.apellido_paterno }}</td>
+            <td data-label="Temperatura" class="numeric-value">{{ record.temperatura }}°C</td>
+            <td data-label="Presión Arterial" class="numeric-value">{{ record.presion_arterial }}</td>
+            <td data-label="Pulso" class="numeric-value">{{ record.pulso }}</td>
+            <td data-label="Frecuencia Respiratoria" class="numeric-value">{{ record.frecuencia_respiratoria }}</td>
+            <td data-label="Peso" class="numeric-value">{{ record.peso }} kg</td>
+            <td data-label="Talla" class="numeric-value">{{ record.talla }} cm</td>
+            <td data-label="IMC" class="numeric-value">{{ record.imc | number:'1.1-1' }}</td>
+            
+            <td data-label="Acciones" class="action-buttons">
+                <a [routerLink]="['/enfermera/vital-signs', record.id, 'edit']" 
+                   class="btn btn-sm btn-outline-primary me-2">
+                  <i class="fas fa-edit"></i>
+                </a>
+                <button (click)="deleteRecord(record.id)" 
+                        class="btn btn-sm btn-outline-danger">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Mensaje cuando no hay registros -->
+    <div *ngIf="!loading && !error && vitalSigns.length === 0" class="alert alert-info">
+      No se encontraron registros de signos vitales.
+    </div>
+  </div>

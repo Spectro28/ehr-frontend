@@ -1,0 +1,262 @@
+/* Contenedor principal */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Tarjeta de información del paciente */
+.patient-info-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.patient-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.patient-details h3 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.patient-id {
+  color: #6c757d;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+/* Cards generales */
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  background: #ffffff;
+  animation: fadeIn 0.3s ease-out;
+  overflow: visible;
+}
+
+.card-header {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-bottom: 1px solid #e9ecef;
+  padding: 1.5rem;
+  border-radius: 12px 12px 0 0;
+}
+
+.card-header h4 {
+  margin: 0;
+  color: #2c3e50;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.card-body {
+  padding: 2rem;
+}
+
+/* Formularios */
+.form-label {
+  color: #2c3e50;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.form-label.required::after {
+  content: '*';
+  color: #dc3545;
+  margin-left: 4px;
+}
+
+.form-control {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+  background-color: #f8f9fa;
+  opacity: 0.8;
+}
+
+/* Sección de diagnósticos */
+.diagnosticos-section {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.diagnosticos-legend {
+  margin-bottom: 10px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+/* Tabla de diagnósticos */
+.table {
+  margin-bottom: 1rem;
+  overflow: visible !important;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-size: 0.9em;
+  padding: 12px;
+}
+
+.table td {
+  padding: 12px;
+  vertical-align: middle;
+  position: relative !important;
+  overflow: visible !important;
+}
+
+/* Sugerencias CIE */
+.position-relative {
+  position: relative !important;
+}
+
+.cie-suggestions {
+  position: absolute !important;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 9999 !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  margin-top: 2px;
+}
+
+.cie-suggestion-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+}
+
+.cie-suggestion-item:hover {
+  background-color: #f5f5f5;
+}
+
+.cie-suggestion-item:last-child {
+  border-bottom: none;
+}
+
+/* Botones */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+  border: none;
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #a0aec0 0%, #718096 100%);
+  border: none;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #f56565 0%, #c53030 100%);
+  border: none;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Alertas */
+.alert {
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.alert-success {
+  background: linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%);
+  color: #276749;
+}
+
+.alert-danger {
+  background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
+  color: #9b2c2c;
+}
+
+.alert-info {
+  background: linear-gradient(135deg, #bee3f8 0%, #90cdf4 100%);
+  color: #2c5282;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .patient-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .cie-suggestions {
+    width: calc(100% - 20px);
+    left: 10px;
+  }
+}
+
+/* Accesibilidad */
+.form-control:focus-visible,
+.btn:focus-visible {
+  outline: 2px solid #4299e1;
+  outline-offset: 2px;
+}

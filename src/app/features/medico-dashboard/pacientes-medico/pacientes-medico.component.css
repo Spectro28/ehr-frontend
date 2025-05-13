@@ -1,0 +1,222 @@
+.card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .table th {
+    font-weight: 600;
+    color: #495057;
+  }
+  
+  .table td {
+    vertical-align: middle;
+  }
+  
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .pagination {
+    margin-bottom: 0;
+  }
+  
+  .page-link {
+    cursor: pointer;
+  }
+  
+  .input-group {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  /* Estilos para el botón de búsqueda */
+  .input-group .btn-primary {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  
+  .input-group .form-control {
+    border-right: none;
+  }
+  
+  .input-group .form-control:focus {
+    border-color: #ced4da;
+    box-shadow: none;
+  }
+  
+  /* Estilos para la tabla */
+  .table-hover tbody tr:hover {
+    background-color: rgba(0,123,255,0.05);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .table-responsive {
+      margin: 0 -1rem;
+    }
+    
+    .btn-sm {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+  
+    .input-group {
+      margin: 0 1rem;
+    }
+  }
+  .custom-navbar {
+    background: url('/assets/navbar_doc.png') no-repeat center center;
+    background-size: cover;
+    padding: 1rem;
+    margin-left: -10px;
+    margin-right: -7px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+    padding-top: 5px;
+  }
+  
+  .navbar-logo {
+    width: 55px;
+    height: auto;
+    margin-right: 10px;
+    display: inline-block;
+    margin-left: 0.7em;
+    cursor: pointer;
+    margin-top: -15px;
+  }
+  
+  /* 🔹 Asegura que los elementos internos del navbar estén sobre la imagen */
+  .container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .navbar-brand {
+    color: #3D539F;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-size: 1.4rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 2;
+    margin-left: -10px;
+    margin-top: 20px; /* Ajusta según lo necesites */
+  }
+  
+  .navbar-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  
+  .navbar-subtitle {
+    font-size: 1rem; /* Tamaño más pequeño */
+    color: #6b7280; /* Un gris más suave */
+    margin-top: -2px; /* Ajusta la separación */
+    margin-left: 3.5em;
+    display: block; /* Asegura que esté debajo */
+  }
+  
+  .nav-link {
+    color: #3D539F;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    /* Grosor del subrayado */
+    background-color: #E61B48;
+    /* Color del subrayado */
+    transform: scaleX(0);
+    /* Inicia invisible */
+    transform-origin: bottom right;
+    transition: transform 0.3s ease;
+    /* Transición del subrayado */
+  }
+  
+  .nav-link:hover::after {
+    transform: scaleX(1);
+    /* El subrayado crece de izquierda a derecha */
+    transform-origin: bottom left;
+  }
+  
+  .nav-link:hover {
+    transform: translateY(-1px);
+    /* border-bottom: 1px solid #E61B48;  Subrayado con un color específico  */
+  }
+  
+  .logout-icon {
+    font-size: 1.7rem;
+    /* Ajusta el tamaño del icono */
+    color: #E61B48;
+    /* Color rojo como el botón anterior */
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+    /* Transiciones suaves */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    /* Espaciado para mejor apariencia */
+    padding-left: 1em;
+    padding-right: 1em;
+  
+    /* 🔹 Simula negrita con sombra de texto */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  
+  }
+  
+  .logout-icon:hover {
+    color: #c82333;
+    /* Color más oscuro en hover */
+    text-shadow: none;
+    /* Quita el efecto de sombra en hover */
+    transform: translateY(-1px);
+  }
+  .btn-cerrar-sesion {
+    background-color: transparent;
+    color: #E61B48;
+    border: 2px solid #E61B48;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-cerrar-sesion i {
+    font-size: 1.2rem;
+  }
+  
+  .btn-cerrar-sesion:hover {
+    background-color: #E61B48;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(230, 27, 72, 0.2);
+  }
+  
+  

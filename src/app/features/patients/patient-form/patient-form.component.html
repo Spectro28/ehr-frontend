@@ -1,0 +1,259 @@
+<!-- Navbar -->
+<nav class="custom-navbar">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <span class="navbar-brand">
+        <img src="/assets/logo.png" alt="Logo" class="navbar-logo">
+        <div>
+          Sistema de Gestión Médica
+          <p class="navbar-subtitle">Panel Secretaria</p>
+        </div>
+      </span>
+    </div>
+    <div class="navbar-links">
+      <a class="nav-link"
+         [routerLink]="['/secretaria/patients']"
+         routerLinkActive="active"
+         (click)="setActiveTab('patients')">
+         <i class="fas fa-users"></i>
+         Gestión de Pacientes
+      </a>
+      <a class="nav-link"
+         [routerLink]="['/secretaria/citas']"
+         routerLinkActive="active"
+         (click)="setActiveTab('citas')">
+         <i class="fas fa-calendar-alt"></i>
+         Gestión de Citas
+      </a>
+      <button class="btn-cerrar-sesion" (click)="cerrarSesion()">
+        <i class="fas fa-sign-out-alt"></i>
+        Cerrar Sesión
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Formulario de Pacientes -->
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2>{{ isEditing ? 'Editar' : 'Nuevo' }} Paciente</h2>
+    </div>
+    <div class="card-body">
+      <div *ngIf="successMessage" class="alert alert-success">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+      
+      <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+        <!-- Datos Personales -->
+        <div class="row mb-4">
+          <h4>Datos Personales</h4>
+          <div class="col-md-6 mb-3">
+  <label class="form-label required">Empresa</label>
+  <select class="form-select" formControlName="empresa">
+    <option value="Sin empresa">Sin empresa</option>
+    <option *ngFor="let empresa of empresas" [value]="empresa">{{ empresa }}</option>
+  </select>
+</div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label required">Apellido Paterno </label>
+            <input type="text" class="form-control" formControlName="apellido_paterno">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label required">Apellido Materno</label>
+            <input type="text" class="form-control" formControlName="apellido_materno">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label required">Primer Nombre </label>
+            <input type="text" class="form-control" formControlName="primer_nombre">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label required">Segundo Nombre</label>
+            <input type="text" class="form-control" formControlName="segundo_nombre">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label required">Cédula </label>
+            <input type="text" class="form-control" formControlName="cedula" 
+                   pattern="[0-9]*" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                   <div *ngIf="patientForm.get('cedula')?.invalid && patientForm.get('cedula')?.touched" 
+                   class="text-danger">
+                <span *ngIf="patientForm.get('cedula')?.errors?.['required']">
+                  La cédula es obligatoria.
+                </span>
+                <span *ngIf="patientForm.get('cedula')?.errors?.['pattern']">
+                  La cédula debe tener exactamente 10 dígitos.
+                </span>
+              </div>
+            </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label required">Teléfono</label>
+            <input type="text" class="form-control" formControlName="telefono" 
+                   pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                   <div *ngIf="patientForm.get('telefono')?.invalid && patientForm.get('telefono')?.touched" 
+                   class="text-danger">
+                <span *ngIf="patientForm.get('telefono')?.errors?.['pattern']">
+                  El teléfono debe tener 10 digitos.
+                </span>
+              </div>
+            </div>
+        </div>
+
+        <!-- Datos de Nacimiento -->
+        <div class="row mb-4">
+          <h4>Datos de Nacimiento</h4>
+          <div class="col-md-6 mb-3">
+            <label class="form-label required">Fecha de Nacimiento *</label>
+            <input type="date" class="form-control" formControlName="fecha_nacimiento">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label required">Lugar de Nacimiento *</label>
+            <input type="text" class="form-control" formControlName="lugar_nacimiento">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label required">Nacionalidad *</label>
+            <input type="text" class="form-control" formControlName="nacionalidad">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label required">Sexo *</label>
+            <select class="form-select" formControlName="sexo">
+              <option value="">Seleccione...</option>
+              <option value="H">Hombre</option>
+              <option value="M">Mujer</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Acordeón para información adicional -->
+        <div class="accordion mb-4">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" 
+                      (click)="toggleAdditionalInfo()"
+                      [attr.aria-expanded]="showAdditionalInfo">
+                Información Adicional (Opcional)
+              </button>
+            </h2>
+            <div class="accordion-collapse collapse" [class.show]="showAdditionalInfo">
+              <div class="accordion-body">
+                <!-- Dirección -->
+                <div class="row mb-4">
+                  <h4>Dirección</h4>
+                  <div class="col-md-12 mb-3">
+                    <label class="form-label">Dirección *</label>
+                    <input type="text" class="form-control" formControlName="direccion">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Barrio</label>
+                    <input type="text" class="form-control" formControlName="barrio">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Provincia</label>
+                    <select class="form-select" formControlName="provincia_id" (change)="onProvinciaChange($event)">
+                      <option value="">Seleccione una provincia</option>
+                      <option *ngFor="let provincia of provincias" [value]="provincia.id">
+                        {{provincia.nombre}}
+                      </option>
+                    </select>
+                  </div>
+                  
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Cantón</label>
+                    <select class="form-select" formControlName="canton_id" (change)="onCantonChange($event)"
+                            [disabled]="!patientForm.get('provincia_id')?.value">
+                      <option value="">Seleccione un cantón</option>
+                      <option *ngFor="let canton of cantones" [value]="canton.id">
+                        {{canton.nombre}}
+                      </option>
+                    </select>
+                  </div>
+                  
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Parroquia</label>
+                    <select class="form-select" formControlName="parroquia_id"
+                            [disabled]="!patientForm.get('canton_id')?.value">
+                      <option value="">Seleccione una parroquia</option>
+                      <option *ngFor="let parroquia of parroquias" [value]="parroquia.id">
+                        {{parroquia.nombre}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Información Adicional -->
+                <div class="row mb-4">
+                  <h4>Información Complementaria</h4>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Estado Civil *</label>
+                    <select class="form-select" formControlName="estado_civil">
+                      <option value="">Seleccione...</option>
+                      <option value="S">Soltero/a</option>
+                      <option value="C">Casado/a</option>
+                      <option value="D">Divorciado/a</option>
+                      <option value="V">Viudo/a</option>
+                      <option value="UL">Unión Libre</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Grupo Cultural</label>
+                    <input type="text" class="form-control" formControlName="grupo_cultural">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Instrucción</label>
+                    <input type="text" class="form-control" formControlName="instruccion">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Ocupación</label>
+                    <input type="text" class="form-control" formControlName="ocupacion">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Empresa donde trabaja</label>
+                    <input type="text" class="form-control" formControlName="empresa_trabajo">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Tipo de Seguro</label>
+                    <input type="text" class="form-control" formControlName="tipo_seguro">
+                  </div>
+                </div>
+
+                <!-- Contacto de Emergencia -->
+                <div class="row mb-4">
+                  <h4>Contacto de Emergencia</h4>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Nombre del Contacto</label>
+                    <input type="text" class="form-control" formControlName="contacto_emergencia">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Parentesco</label>
+                    <input type="text" class="form-control" formControlName="parentesco_emergencia">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Dirección</label>
+                    <input type="text" class="form-control" formControlName="direccion_emergencia">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" formControlName="telefono_emergencia">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-secondary" (click)="cancel()">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary" 
+                  [disabled]="patientForm.invalid || loading">
+            {{ loading ? 'Guardando...' : (isEditing ? 'Actualizar' : 'Guardar') }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

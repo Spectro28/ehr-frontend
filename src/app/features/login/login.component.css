@@ -1,0 +1,221 @@
+.login-container {
+  display: flex;
+  min-height: 100vh;
+  background: white;
+
+}
+
+.left-panel {
+  flex: 1;
+  position: relative;
+  background: rgb(255, 255, 255);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  /* Ajuste del tamaño del panel */
+  clip-path: ellipse(95% 80% at 5% 50%);
+  z-index: 1; /* Asegúrate de que el panel izquierdo esté por encima */
+
+}
+
+.left-panel-content {
+  z-index: 2;
+  text-align: center;
+  padding: 2rem;
+}
+
+.left-panel h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.left-panel p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.left-panel img {
+  max-width: 80%;
+  border-radius: 10px;
+}
+
+.right-panel {
+  position: relative; /* Cambia a relative para que se superponga correctamente */
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(32, 28, 117);
+  margin-top: 3em;
+  margin-bottom: 3em;
+  right: 6em;
+  z-index: 0; /* Asegúrate de que esté por debajo del panel izquierdo */
+  border-top-right-radius: 1.5em; /* Border radius solo en la esquina superior derecha */
+  border-bottom-right-radius: 1.5em; /* Border radius solo en la esquina inferior derecha */
+}
+
+.login-form {
+  position: relative;
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  animation: fadeIn 1s ease-out;
+  left: 3em;
+  width: 23em;
+  height: 25em;
+}
+
+/* ANIMACIÓN ORIGINAL */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ESTILOS ORIGINALES DE INPUTS Y LABELS */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size: 0.9em;
+  color: #333;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.880rem;
+  color: #686e73;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
+}
+
+.form-control:focus {
+  border-color: #007bff; /* Cambia el color del borde cuando está enfocado */
+  outline: none; /* Elimina el borde azul predeterminado del navegador */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);   /*Añade un efecto de sombra opcional  */
+}
+
+.form-control:hover {
+  border-color: #007bff; /* Cambia el color del borde cuando se pasa el cursor por encima */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Añade un efecto de sombra al pasar el cursor */
+}
+
+.btn {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 0.5em;
+  margin-bottom: -0.5em;
+}
+
+.btn-primary {
+  background-color: rgb(193, 14, 33);
+  color: rgb(241, 236, 236);
+  font-weight: 700;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: rgb(153, 11, 26);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); /* Aumenta sutilmente la sombra */
+  border-color: rgba(255, 255, 255, 0.2); /* Un toque de borde visible en hover */
+  transform: translateY(-2px); /* Sutil efecto de elevación */
+}
+
+.btn-primary:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.forgot-password-link {
+  color: #047CDB;
+  text-decoration: none;
+  font-size: 0.9rem;
+  
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.text-center {
+  text-align: center;
+  padding-top: 1em;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 1.6em;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  padding-top: 0.2em;
+  padding-bottom: 0.6em;
+}
+
+.background {
+  padding-bottom: 4em;
+}
+
+.left-panel-content .caption {
+  position: relative;
+  top: -50px;
+  font-size: 1.4em; /* Aumenta el tamaño del texto */
+  color: rgb(193, 14, 33);
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+
+}
+
+.input-group {
+  position: relative;
+}
+
+.input-group-text {
+  position: absolute;
+  right: 5px; /* Ajusta este valor para mover el ícono más a la derecha si es necesario */
+  top: 50%;
+  transform: translateY(-50%);
+  border: none; /* Quitar bordes */
+  cursor: pointer;
+  background: none; /* Eliminar el fondo gris */
+  z-index: 10; /* Asegúrate de que el ojo esté por encima del input */
+}
+
+.input-group .form-control {
+  padding-right: 35px; /* Deja espacio para el ícono del ojo dentro del input */
+}
+
+.eye-icon {
+  width: 15px; /* Ajusta el tamaño según tu preferencia */
+  height: auto;
+  
+}
+
+

@@ -1,0 +1,29 @@
+<div class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Generar Certificado Médico</h4>
+        <button type="button" class="close-button" (click)="cerrar()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Días de Reposo</label>
+          <input type="number" [(ngModel)]="diasReposo" min="1">
+        </div>
+        <div class="form-group">
+          <label>Tipo de Reposo</label>
+          <select [(ngModel)]="tipoReposo">
+            <option value="absoluto">Reposo Absoluto</option>
+            <option value="relativo">Reposo Relativo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Observaciones Adicionales</label>
+          <textarea [(ngModel)]="observaciones" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="button-secondary" (click)="cerrar()">Cancelar</button>
+        <button type="button" class="button-primary" (click)="generarCertificado()">Generar PDF</button>
+      </div>
+    </div>
+  </div>

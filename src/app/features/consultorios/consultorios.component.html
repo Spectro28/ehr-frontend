@@ -1,0 +1,148 @@
+<div class="consultorios-container">
+  
+
+  <!-- Mensajes de alerta -->
+  <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show">
+    {{ errorMessage }}
+    <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
+  </div>
+  <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show">
+    {{ successMessage }}
+    <button type="button" class="btn-close" (click)="successMessage = ''"></button>
+  </div>
+
+  <!-- Formulario -->
+  <div *ngIf="showForm" class="form-container">
+    <h3>{{ editMode ? 'Editar Consultorio' : 'Nuevo Consultorio' }}</h3>
+    <form (ngSubmit)="editMode ? updateConsultorio() : createConsultorio()">
+      <div class="row g-3">
+        <!-- Número de consultorio -->
+        <div class="col-md-6">
+          <label for="numero" class="form-label">Número de Consultorio *</label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="numero"
+            [(ngModel)]="newConsultorio.numero"
+            name="numero"
+            required>
+        </div>
+
+        <!-- Doctor -->
+        <div class="col-md-6">
+          <label for="doctor" class="form-label">Doctor Asignado *</label>
+          <select 
+            class="form-select" 
+            id="doctor"
+            [(ngModel)]="newConsultorio.doctorId"
+            name="doctorId"
+            required>
+            <option [ngValue]="0">Seleccione un doctor</option>
+            <option *ngFor="let doctor of doctores" [value]="doctor.id">
+              {{ doctor.username }} - {{ doctor.especialidad }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Descripción -->
+        <div class="col-12">
+          <label for="descripcion" class="form-label">Descripción</label>
+          <textarea 
+            class="form-control" 
+            id="descripcion"
+            [(ngModel)]="newConsultorio.descripcion"
+            name="descripcion"
+            rows="2">
+          </textarea>
+        </div>
+
+        <!-- Nuevo Selector de Horarios -->
+        <div class="col-12">
+          <div class="horarios-section">
+            <h4>Horarios de Atención</h4>
+            <app-consultorio-horario
+  [horarios]="consultorioSeleccionado?.horarios || []"
+  (horariosChange)="onHorariosChange($event)">
+</app-consultorio-horario>
+          </div>
+        </div>
+
+        <!-- Botones del formulario -->
+        <div class="col-12">
+          <div class="form-actions">
+            <button 
+              type="submit" 
+              class="btn btn-primary me-2"
+              [disabled]="isLoading">
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1"></span>
+              {{ isLoading ? 'Guardando...' : (editMode ? 'Actualizar' : 'Guardar') }}
+            </button>
+            <button 
+              type="button"
+              class="btn btn-secondary"
+              (click)="resetForm()">
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Tabla de consultorios -->
+  <div class="table-container mt-4">
+    <div *ngIf="isLoading" class="text-center p-3">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+    </div>
+    <div class="header">
+      <h2>Lista de Consultorios</h2>
+      <button 
+        class="btn btn-primary btn-secundario"
+        (click)="showForm = !showForm; editMode = false">
+        {{ showForm ? 'Cancelar' : 'Nuevo Consultorio' }}
+      </button>
+    </div>
+    <table class="table table-hover" *ngIf="!isLoading">
+      <thead class="thead-dark">
+        <tr>
+          <th>Número</th>
+          <th>Doctor</th>
+          <th>Descripción</th>
+          <th>Horarios</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let consultorio of consultorios">
+          <td>{{ consultorio.numero }}</td>
+          <td>{{ getDoctorName(consultorio.doctorId) }}</td>
+          <td>{{ consultorio.descripcion }}</td>
+          <td>
+            <div *ngFor="let horario of consultorio.horarios" class="horario-item">
+              {{ horario.dia }}: {{ horario.horaInicio || '--:--' }} - {{ horario.horaFin || '--:--' }}
+            </div>
+          </td>
+          <td>
+            <button 
+              class="btn btn-sm btn-primary me-4"
+              (click)="editConsultorio(consultorio)"
+              [disabled]="isLoading">
+              <i class="fas fa-edit"></i> Editar
+            </button>
+            <button 
+              class="btn btn-sm btn-danger"
+              (click)="deleteConsultorio(consultorio.id!)"
+              [disabled]="isLoading">
+              <i class="fas fa-trash"></i> Eliminar
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="consultorios.length === 0">
+          <td colspan="5" class="text-center">No hay consultorios registrados</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
