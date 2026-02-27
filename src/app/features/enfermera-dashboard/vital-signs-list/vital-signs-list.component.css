@@ -1,0 +1,207 @@
+/* Estilos generales del contenedor */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Estilos para el título */
+  h2 {
+    color: #2c3e50;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+  }
+  
+  /* Estilos para el formulario de filtros */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    font-weight: 500;
+    color: #34495e;
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-control {
+    border-radius: 6px;
+    border: 1px solid #dde1e3;
+    padding: 0.625rem;
+    transition: border-color 0.2s ease;
+  }
+  
+  .form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+  }
+  
+  /* Estilos para la tabla */
+  .table-responsive {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  .table {
+    margin-bottom: 0;
+  }
+  
+  .table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    color: #2c3e50;
+    font-weight: 600;
+    padding: 12px;
+    white-space: nowrap;
+  }
+  
+  .table tbody td {
+    padding: 12px;
+    vertical-align: middle;
+    color: #2c3e50;
+  }
+  
+  .table tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+  
+  /* Estilos para los botones */
+  .btn-primary {
+    background-color: #3498db;
+    border-color: #3498db;
+    padding: 0.625rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+  }
+  
+  .btn-outline-primary {
+    color: #3498db;
+    border-color: #3498db;
+  }
+  
+  .btn-outline-primary:hover {
+    background-color: #3498db;
+    color: #fff;
+  }
+  
+  .btn-outline-danger {
+    color: #e74c3c;
+    border-color: #e74c3c;
+  }
+  
+  .btn-outline-danger:hover {
+    background-color: #e74c3c;
+    color: #fff;
+  }
+  
+  /* Estilos para los iconos en los botones */
+  .btn i {
+    font-size: 0.875rem;
+  }
+  
+  /* Estilos para los mensajes de estado */
+  .alert {
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .alert-info {
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    color: #0c5460;
+  }
+  
+  .alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+  }
+  
+  /* Estilos para valores específicos en la tabla */
+  td[data-type="temperature"] {
+    color: #e67e22;
+    font-weight: 500;
+  }
+  
+  td[data-type="pressure"] {
+    color: #2980b9;
+    font-weight: 500;
+  }
+  
+  /* Estilos responsivos */
+  @media (max-width: 768px) {
+    .table-responsive {
+      border: 0;
+      box-shadow: none;
+    }
+  
+    .table thead {
+      display: none;
+    }
+  
+    .table tbody tr {
+      display: block;
+      margin-bottom: 1rem;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+  
+    .table tbody td {
+      display: block;
+      text-align: right;
+      padding: 0.75rem;
+      border-bottom: 1px solid #dee2e6;
+    }
+  
+    .table tbody td::before {
+      content: attr(data-label);
+      float: left;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+  
+    .table tbody td:last-child {
+      border-bottom: 0;
+    }
+  }
+  
+  /* Animaciones */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .table-responsive {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  /* Estilos para los botones de acción */
+  .action-buttons {
+    white-space: nowrap;
+  }
+  
+  .action-buttons .btn {
+    margin: 0 3px;
+    padding: 6px 10px;
+  }
+  
+  /* Estilos para los valores numéricos */
+  .numeric-value {
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 500;
+  }

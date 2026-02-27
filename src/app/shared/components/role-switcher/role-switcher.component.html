@@ -1,0 +1,30 @@
+<div class="role-switcher" *ngIf="availableRoles.length > 0">
+  <div class="role-dropdown">
+    <button class="role-button" (click)="toggleDropdown()">
+      <i class="fas fa-exchange-alt"></i>
+      Cambiar Perfil
+      <i class="fas fa-chevron-down" [class.rotated]="showDropdown"></i>
+    </button>
+
+    <div class="dropdown-menu" [class.show]="showDropdown">
+      <div class="current-role">
+        <small>Perfil Actual: {{ getCurrentRoleDisplayName() }}</small>
+      </div>
+      <hr>
+      <div class="available-roles">
+        <button
+          *ngFor="let role of availableRoles"
+          class="role-option"
+          (click)="switchRole(role)">
+          <i class="fas fa-user-circle"></i>
+          {{ getRoleDisplayName(role) }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="single-role-message" *ngIf="availableRoles.length === 0">
+  <i class="fas fa-user"></i>
+  Perfil Único: {{ getCurrentRoleDisplayName() }}
+</div>

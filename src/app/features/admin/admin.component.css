@@ -1,0 +1,399 @@
+.admin-dashboard {
+  padding: 2rem 1rem; /* Reducido el padding horizontal para más espacio útil */
+  background-color: #E5E7EB;
+  min-height: 100vh;
+  border-radius: 0.8em;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  margin: 0 -3rem 3rem -3rem; /* Aumentados los márgenes negativos */
+  width: calc(100% + 6rem); /* Ajustado para los nuevos márgenes */
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Contenedor para el formulario y la tabla */
+.form-card, .users-card {
+  max-width: 2600px; /* Aumentado significativamente el ancho máximo */
+  width: 98%; /* Asegurar que use casi todo el espacio disponible */
+  margin: 0 auto; /* Centrar los elementos */
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajustes para el formulario */
+.create-user-form {
+  padding: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Hacer los inputs más anchos */
+.form-control {
+  max-width: none; /* Eliminar el ancho máximo si existe */
+  width: 100%;
+}
+
+
+.table-responsive {
+  max-height: 600px;
+  overflow-y: auto;
+  transition: max-height 0.3s ease-in-out;
+  border-radius: 8px;
+  background-color: #fff;
+  margin: 0 -1px; /* Evitar bordes dobles */
+  padding: 0 1px; /* Mantener el scroll visible */
+}
+
+/* Ajustes adicionales para la tabla */
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table th {
+  padding: 1rem;
+  font-size: 0.95rem;
+  background-color: #f8f9fa;
+}
+
+.table td {
+  padding: 1rem;
+  font-size: 0.95rem;
+}
+
+/* Hacer las columnas más proporcionales */
+.table th:nth-child(1) { width: 5%; }  /* ID */
+.table th:nth-child(2) { width: 12%; } /* Usuario */
+.table th:nth-child(3) { width: 18%; } /* Cédula/Email */
+.table th:nth-child(4) { width: 15%; } /* Roles */
+.table th:nth-child(5) { width: 15%; } /* Especialidad */
+.table th:nth-child(6) { width: 12%; } /* Empresa */
+.table th:nth-child(7) { width: 8%; }  /* Estado */
+.table th:nth-child(8) { width: 15%; } /* Acciones */
+
+/* Estilos para la tabla */
+.table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  color: #495057;
+  font-weight: 600;
+  padding: 12px;
+  white-space: nowrap;
+}
+
+.table tbody td {
+  padding: 12px;
+  vertical-align: middle;
+}
+
+/* Estilos para los botones de acción */
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-sm i {
+  font-size: 0.875rem;
+}
+
+/* Hover effects para los botones */
+.btn-outline-primary:hover {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-outline-success:hover {
+  background-color: #198754;
+  color: white;
+}
+
+/* Gap entre botones */
+.d-flex.gap-2 {
+  gap: 0.5rem !important;
+}
+
+/* Estilos para los badges de estado y roles */
+.badge {
+  padding: 0.5em 0.8em;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border-radius: 4px;
+}
+
+/* Efecto hover en las filas de la tabla */
+.table tbody tr:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+  text-align: center;   
+  padding-right: 3em;
+  
+ 
+  
+  .subtitle {
+   
+
+  font-size: 1.3rem; /* Tamaño más pequeño */
+  color: #6b7280; /* Un gris más suave */
+  margin-top: -2px; /* Ajusta la separación */
+  margin-left: 3.5em;
+  display: block; /* Asegura que esté debajo */
+  font-weight: 700;
+
+
+  
+  }
+}
+
+.alerts-container {
+  margin-bottom: 2rem;
+  
+  .alert {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    
+    i {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.card-header h2 i {
+  color: #3D539F !important; /* Cambia "red" por el color que necesites */
+}
+
+.card-header h2::before {
+  content: "•"; /* Punto antes del título */
+  color: #E61B48; /* Color del punto */
+  font-size: 1.5rem; /* Tamaño del punto */
+  margin-right: 0.5rem; /* Espaciado entre el punto y el texto */
+  font-weight: bold;
+}
+
+.form-group label i { color: #3D539F!important; } /* Verde */
+.card-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 2.3%;
+  right: 2.3%;
+  height: 2px;
+  background-color: #3D539F;
+}
+.card {
+  border: 2px solid #ffffff; 
+  margin-bottom: 2rem;
+  
+  .card-header {
+    background-color: #fff;
+    border-bottom: none; /* Esto quita la línea por defecto */
+    padding: 1.5rem;
+    border-radius: 12px 12px 0 0;
+    position: relative;
+    
+    
+    h2 {
+      color: #212529da;
+      font-size: 1.3rem;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      
+      i {
+        color: #3498db;
+      }
+    }
+  }
+  
+  .card-body {
+    padding: 2rem;
+  }
+}
+
+.role-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1050;
+}
+
+.modal.show {
+  display: block;
+}
+
+.badge {
+  margin-right: 5px;
+}
+.form-group {
+  margin-bottom: 1.5rem;
+  
+  label {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    color: #373b3f;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    i {
+      color: #3498db;
+    }
+  }
+  
+  .form-control {
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+    
+    &:focus {
+      border-color: #3498db;
+      box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    }
+  }
+}
+
+.form-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+  
+  .btn {
+    height: 53px;
+    border: 1px solid transparent; /* Evita bordes fuertes, pero permite efecto sutil */
+    border-radius: 2.2em;
+    background-color: #E61B48;
+    padding: 1.5rem 1.5rem; /* Ajuste ligero para mejor proporción */
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    transition: all 0.3s ease-in-out;
+
+    i {
+      font-size: 1.1rem;
+    }
+  }
+  .btn:hover {
+    background-color: #C9143A; /* Un tono más oscuro */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); /* Aumenta sutilmente la sombra */
+    border-color: rgba(255, 255, 255, 0.2); /* Un toque de borde visible en hover */
+    transform: translateY(-2px); /* Sutil efecto de elevación */
+}
+}
+
+.table {
+  margin-bottom: 0;
+  
+  th {
+    background-color: #2c3e50;
+    color: white;
+    font-weight: 500;
+    border: none;
+  }
+  
+  td {
+    vertical-align: middle;
+    color: #2c3e50;
+  }
+}
+
+.badge {
+  min-width: 100px; /* Ajusta según necesidad */
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border-radius: 6px;
+  
+  &.bg-doctor {
+    background-color: #3498db;
+  }
+  
+  &.bg-secretaria {
+    background-color: #e74c3c;
+  }
+  
+  &.bg-enfermera {
+    background-color: #2ecc71;
+  }
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 6px;
+  
+  i {
+    font-size: 0.9rem;
+  }
+}
+
+.no-users {
+  text-align: center;
+  padding: 3rem;
+  color: #6c757d;
+  
+  i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

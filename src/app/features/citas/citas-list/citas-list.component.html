@@ -1,0 +1,66 @@
+<div class="citas-container">
+  <!-- Card agregado para envolver todo el contenido -->
+  <div class="card">
+      <div class="header">
+          <h2>Lista de Citas</h2>
+          <button class="btn btn-secundario" (click)="nuevaCita()">Nueva Cita</button>
+      </div>
+
+      <!-- Filtros -->
+      <div class="filtros">
+          <div class="busqueda">
+              <input type="text" [(ngModel)]="filtroBusqueda" (ngModelChange)="filtrarCitas()"
+                  placeholder="Buscar por nombre o cédula" class="form-control">
+          </div>
+          <input type="date" [(ngModel)]="filtroFecha" (ngModelChange)="filtrarCitas()" placeholder="Filtrar por fecha">
+          <select [(ngModel)]="filtroEstado" (ngModelChange)="filtrarCitas()">
+              <option value="">Todos los estados</option>
+              <option value="pendiente">Pendiente</option>
+              <option value="atendido">Atendido</option>
+              <option value="cancelado">Cancelado</option>
+          </select>
+          <button (click)="limpiarFiltros()">Limpiar filtros</button>
+      </div>
+
+      <!-- Mensaje de carga -->
+      <div *ngIf="loading" class="loading">Cargando citas...</div>
+
+      <!-- Mensaje de error -->
+      <div *ngIf="error" class="error">{{ error }}</div>
+
+      <!-- Lista de citas -->
+      <div *ngIf="!loading && !error" class="citas-list">
+          <div *ngIf="citas.length === 0" class="no-citas">No hay citas disponibles</div>
+          <table *ngIf="citas.length > 0">
+              <thead>
+                  <tr>
+                      <th>Fecha</th>
+                      <th>Hora</th>
+                      <th>Paciente</th>
+                      <th>Doctor</th>
+                      <th>Consultorio</th>
+                      <th>Estado</th>
+                      <th>Acciones</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let cita of citas">
+                      <td>{{ cita.fecha | date:'dd/MM/yyyy' }}</td>
+                      <td>{{ cita.hora }}</td>
+                      <td>{{ getNombreCompletoPaciente(cita.paciente) }}</td>
+                      <td>{{ cita.doctor?.username || 'N/A' }}</td>
+                      <td>{{ cita.consultorio?.numero || 'N/A' }}</td>
+                      <td>{{ cita.estado }}</td>
+                      <td>
+                        <div class="botones-container">
+                          <button class="btn btn-info btn-sm" (click)="verDetalle(cita.id)">Ver</button>
+                          <button class="btn btn-warning btn-sm" (click)="editarCita(cita.id)">Editar</button>
+                          <button class="btn btn-danger btn-sm" (click)="cancelarCita(cita.id)">Cancelar</button>
+                        </div>
+                        </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div> <!-- Fin del card -->
+</div> <!-- Fin de citas-container -->

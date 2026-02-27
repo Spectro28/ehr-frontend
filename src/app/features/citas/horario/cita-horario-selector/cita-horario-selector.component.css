@@ -1,0 +1,210 @@
+.horarios-container {
+  padding: 20px;
+}
+
+.horarios-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.horario-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.horario-header {
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.horario-header.active {
+  background-color: #e3f2fd;
+}
+
+.fecha-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.dia-nombre {
+  font-weight: bold;
+  color: #2196f3;
+}
+
+.fecha {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.toggle-btn {
+  padding: 8px 16px;
+  border: 1px solid #2196f3;
+  border-radius: 4px;
+  background-color: white;
+  color: #2196f3;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggle-btn:hover {
+  background-color: #e3f2fd;
+}
+
+.toggle-btn.active {
+  background-color: #2196f3;
+  color: white;
+}
+
+.horario-content {
+  padding: 15px;
+}
+
+.turnos-disponibles h5 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.turnos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.turno-btn {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.turno-btn:not(:disabled):hover {
+  background-color: #f5f5f5;
+}
+
+.turno-btn.seleccionado {
+  background-color: #4caf50;
+  color: white;
+  border-color: #4caf50;
+}
+
+.turno-btn.ocupado {
+  background-color: #ffebee;
+  border-color: #ffcdd2;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.turno-btn:disabled {
+  cursor: not-allowed;
+}
+
+.estado-badge {
+  font-size: 0.75em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-left: 8px;
+}
+
+.estado-badge.ocupado {
+  background-color: #ef5350;
+  color: white;
+}
+
+.estado-badge.disponible {
+  background-color: #66bb6a;
+  color: white;
+}
+
+.no-turnos {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .horarios-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .turnos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+  .turno-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 50px;
+    margin: 5px 0;
+  }
+  
+  .turno-btn {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+  }
+  
+  .turno-btn:not(:disabled):hover {
+    background-color: #e3f2fd;
+    border-color: #2196f3;
+  }
+  
+  .turno-btn.seleccionado {
+    background-color: #2196f3;
+    color: white;
+    border-color: #1976d2;
+  }
+  
+  .turno-wrapper.ocupado .turno-btn {
+    background-color: #ffebee;
+    border-color: #ef5350;
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  .estado-ocupado {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ef5350;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .turnos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  /* Estilos para dispositivos móviles */
+  @media (max-width: 768px) {
+    .turnos-grid {
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+  }
+  }

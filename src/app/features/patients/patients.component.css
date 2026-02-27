@@ -1,0 +1,338 @@
+/* Estilos generales */
+.container {
+    max-width: 1400px;
+  }
+  .consultorios-container {
+    padding: 2rem;
+    background-color: #E5E7EB;
+    min-height: 100vh;
+    border-radius: 0.8em;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 3rem;
+  }
+  /* Encabezado */
+  h2 {
+    color: #2c3e50;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .btn-primary {
+    background-color: #00e5ff;
+    border-radius: 20px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #34495e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-secundario {
+  height: 53px;
+  border: 1px solid transparent; /* Evita bordes fuertes, pero permite efecto sutil */
+  border-radius: 0.3em;
+  padding: 0.6rem 1rem; /* Ajuste ligero para mejor proporción */
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  transition: all 0.3s ease-in-out;
+  background-color: #047CDB;
+    
+   
+}
+
+.btn-secundario:hover {
+  background-color: #0367B0;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); /* Aumenta sutilmente la sombra */
+  border-color: rgba(255, 255, 255, 0.2); /* Un toque de borde visible en hover */
+  transform: translateY(-2px); /* Sutil efecto de elevación */
+}
+
+
+  /* Tarjeta */
+  .card {
+    border: none;
+    border-radius: 8px;
+    margin-top: 1.5em;
+    
+  }
+  
+  .card-body {
+    padding: 2rem;
+    
+   
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #3D539F;
+
+    h2 {
+      margin-right: 15em;
+      color: #212529da;
+      font-size: 1.4rem;
+      white-space: nowrap; /* Evita que el texto se divida */
+    
+
+      &::before {
+        content: "•";
+        color: #E61B48;
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        font-weight: bold;
+      }
+    }
+  }
+
+  /* Buscador */
+  .form-control {
+    width: 250px;
+    padding: 0.90rem 1rem;
+    border: 1px solid #d3d7db;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+  
+  .form-control:focus {
+    border-color: #2c3e50;
+    box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.25);
+  }
+  
+  /* Tabla */
+  .table-responsive {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .table {
+    margin-bottom: 0;
+  }
+  
+  .table thead th {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem;
+    border: none;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .table tbody tr {
+    transition: background-color 0.3s ease;
+  }
+  
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(100, 149, 237, 0.08); /* Azul medio con un tono más suave */
+}
+
+
+
+
+
+  
+  
+  .table td {
+    padding: 1rem;
+    vertical-align: middle;
+  }
+  
+  /* Botones de acción */
+  i {
+    margin-right: 8px;
+  }
+
+  .btn-secundario {
+    height: 53px;
+    border: 1px solid transparent; /* Evita bordes fuertes, pero permite efecto sutil */
+    border-radius: 0.3em;
+    background-color: #047CDB;
+    padding: 0.6rem 1rem; /* Ajuste ligero para mejor proporción */
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    transition: all 0.3s ease-in-out;
+}
+
+  .btn-info,
+  .btn-danger {
+      color: white;
+      padding: 6px 12px;
+      font-size: 0.875rem;
+  
+
+      align-items: center;
+      justify-content: center; /* Centra el texto */
+  }
+  
+  .btn-info {
+      background-color: #3498db;
+      border-color: #3498db;
+  }
+  
+  .btn-info:hover {
+      background-color: #2d84be;
+      border-color: #2d84be;
+  }
+  
+  .btn-danger {
+      background-color: #ef4444;
+      border-color: #ef4444;
+  }
+  
+  .btn-danger:hover {
+      background-color: #dc2626;
+      border-color: #dc2626;
+  }
+  
+  /* Navegación de registros */
+  .d-flex {
+    color: #6c757d;
+    font-size: 0.9rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .d-flex span {
+    font-weight: bold;
+    color: #2c3e50;
+  }
+  
+  .pagination {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .page-item {
+    display: inline-block;
+  }
+  
+  .page-link {
+    color: #2c3e50;
+    padding: 0.5rem 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .page-link:hover {
+    color: #fff;
+    background-color: #2c3e50;
+  }
+  
+  .page-item.active .page-link {
+    background-color: #2c3e50;
+    color: white;
+    border-color: #2c3e50;
+  }
+  
+  .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #fff;
+  }
+  
+  /* Mejoras en "Mostrando registros" */
+  .records-info {
+    font-size: 0.95rem;
+    color: #2c3e50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  
+  .records-info span {
+    font-weight: 600;
+    color: #34495e;
+  }
+  
+  .records-info button {
+    background-color: transparent;
+    border: none;
+    color: #3498db;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .records-info button:hover {
+    color: #2980b9;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .card-body {
+      padding: 1rem;
+    }
+  
+    .table thead {
+      display: none;
+    }
+  
+    .table,
+    .table tbody,
+    .table tr,
+    .table td {
+      display: block;
+      width: 100%;
+    }
+  
+    .table tr {
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #dee2e6;
+    }
+  
+    .table td {
+      text-align: right;
+      padding: 0.5rem;
+      position: relative;
+      padding-left: 50%;
+    }
+  
+    .table td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 0;
+      width: 45%;
+      padding-left: 0.5rem;
+      font-weight: bold;
+      text-align: left;
+    }
+  
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      margin: 0.25rem 0;
+      display: block;
+      width: 100%;
+    }
+  
+    .pagination {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+  

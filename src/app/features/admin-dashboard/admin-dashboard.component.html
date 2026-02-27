@@ -1,0 +1,49 @@
+<nav class="custom-navbar">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <span class="navbar-brand">
+        <img src="/assets/logo.png" alt="Logo" class="navbar-logo">
+        <div>
+          Sistema de Gestión Médica
+          <p class="navbar-subtitle">Panel Administrador</p>
+        </div>
+      </span>
+    </div>
+    <div class="navbar-links">
+      <a class="nav-link"
+         [class.active]="activeTab === 'admin'"
+         (click)="setActiveTab('admin')">
+        <i class="fas fa-users-cog"></i>
+        Gestión de Usuarios
+      </a>
+      <a class="nav-link"
+         [class.active]="activeTab === 'consultorios'"
+         (click)="setActiveTab('consultorios')">
+        <i class="fas fa-clinic-medical"></i>
+        Gestión de Consultorios
+      </a>
+      <a class="nav-link"
+         [class.active]="activeTab === 'catalogos'"
+         (click)="setActiveTab('catalogos')">
+        <i class="fas fa-book-medical"></i>
+        Catálogos
+      </a>
+      <button class="btn-cerrar-sesion" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        Cerrar Sesión
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <div *ngIf="activeTab === 'admin'">
+    <app-admin></app-admin>
+  </div>
+  <div *ngIf="activeTab === 'consultorios'">
+    <app-consultorios></app-consultorios>
+  </div>
+  <div *ngIf="activeTab === 'catalogos'">
+    <app-catalogos></app-catalogos>
+  </div>
+</div>

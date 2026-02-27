@@ -1,0 +1,317 @@
+<!-- Navbar -->
+<nav class="custom-navbar">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <span class="navbar-brand">
+        <img src="/assets/logo.png" alt="Logo" class="navbar-logo">
+        <div>
+          Sistema de Gestión Médica
+          <p class="navbar-subtitle">Panel Secretaria</p>
+        </div>
+      </span>
+    </div>
+    <div class="navbar-links">
+      <a class="nav-link"
+         [routerLink]="['/secretaria/patients']"
+         routerLinkActive="active"
+         (click)="setActiveTab('patients')">
+         <i class="fas fa-users"></i>
+         Gestión de Pacientes
+      </a>
+      <a class="nav-link"
+         [routerLink]="['/secretaria/citas']"
+         routerLinkActive="active"
+         (click)="setActiveTab('citas')">
+         <i class="fas fa-calendar-alt"></i>
+         Gestión de Citas
+      </a>
+      <button class="btn-cerrar-sesion" (click)="cerrarSesion()">
+        <i class="fas fa-sign-out-alt"></i>
+        Cerrar Sesión
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Formulario de Pacientes -->
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2>{{ isEditing ? 'Editar' : 'Nuevo' }} Paciente</h2>
+    </div>
+    <div class="card-body">
+      <div *ngIf="successMessage" class="alert alert-success">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+      
+      <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+        <!-- Datos Personales -->
+        <div class="row mb-4">
+          <h4>Datos Personales</h4>
+          <div class="col-md-6 mb-3">
+  <label class="form-label" [ngClass]="{'required': patientForm.get('tipo_identificacion')?.value !== 'no_identificado'}">Empresa <span *ngIf="patientForm.get('tipo_identificacion')?.value !== 'no_identificado'">*</span></label>
+  <select class="form-select" formControlName="empresa">
+    <option value="Sin empresa">Sin empresa</option>
+    <option *ngFor="let empresa of empresas" [value]="empresa">{{ empresa }}</option>
+  </select>
+  <div *ngIf="patientForm.get('empresa')?.invalid && patientForm.get('empresa')?.touched && patientForm.get('tipo_identificacion')?.value !== 'no_identificado'" class="text-danger">
+    <span *ngIf="patientForm.get('empresa')?.errors?.['required']">Este campo es obligatorio.</span>
+  </div>
+</div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label" [ngClass]="{'required': patientForm.get('tipo_identificacion')?.value !== 'no_identificado'}">Apellido Paterno <span *ngIf="patientForm.get('tipo_identificacion')?.value !== 'no_identificado'">*</span></label>
+            <input type="text" class="form-control" formControlName="apellido_paterno" style="text-transform: uppercase">
+            <div *ngIf="patientForm.get('apellido_paterno')?.invalid && patientForm.get('apellido_paterno')?.touched && patientForm.get('tipo_identificacion')?.value !== 'no_identificado'" class="text-danger">
+              <span *ngIf="patientForm.get('apellido_paterno')?.errors?.['required']">Este campo es obligatorio.</span>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label required">Apellido Materno</label>
+            <input type="text" class="form-control" formControlName="apellido_materno" style="text-transform: uppercase">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label" [ngClass]="{'required': patientForm.get('tipo_identificacion')?.value !== 'no_identificado'}">Primer Nombre <span *ngIf="patientForm.get('tipo_identificacion')?.value !== 'no_identificado'">*</span></label>
+            <input type="text" class="form-control" formControlName="primer_nombre" style="text-transform: uppercase">
+            <div *ngIf="patientForm.get('primer_nombre')?.invalid && patientForm.get('primer_nombre')?.touched && patientForm.get('tipo_identificacion')?.value !== 'no_identificado'" class="text-danger">
+              <span *ngIf="patientForm.get('primer_nombre')?.errors?.['required']">Este campo es obligatorio.</span>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label required">Segundo Nombre</label>
+            <input type="text" class="form-control" formControlName="segundo_nombre" style="text-transform: uppercase">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label required">Tipo de Identificación</label>
+            <select class="form-select" formControlName="tipo_identificacion">
+              <option value="cedula">Cédula</option>
+              <option value="pasaporte">Pasaporte</option>
+              <option value="no_identificado">No identificado (momentáneo)</option>
+            </select>
+          </div>
+
+          <div class="col-md-6 mb-3" *ngIf="patientForm.get('tipo_identificacion')?.value !== 'no_identificado'">
+            <label class="form-label required">
+              {{ patientForm.get('tipo_identificacion')?.value === 'cedula' ? 'Cédula' : 'Pasaporte' }}
+            </label>
+            <input type="text" class="form-control" formControlName="cedula"
+                   [attr.maxlength]="patientForm.get('tipo_identificacion')?.value === 'cedula' ? 10 : 18"
+                   (input)="onCedulaInput($event)">
+            <div *ngIf="patientForm.get('cedula')?.invalid && patientForm.get('cedula')?.touched" class="text-danger">
+              <span *ngIf="patientForm.get('cedula')?.errors?.['required']">
+                Este campo es obligatorio.
+              </span>
+              <span *ngIf="patientForm.get('cedula')?.errors?.['pattern']">
+                {{ patientForm.get('tipo_identificacion')?.value === 'cedula' ? 'La cédula debe tener exactamente 10 dígitos.' : 'El pasaporte debe tener entre 6 y 18 caracteres alfanuméricos.' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label required">Teléfono</label>
+            <input type="text" class="form-control" formControlName="telefono"
+                   pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="10">
+                   <div *ngIf="patientForm.get('telefono')?.invalid && patientForm.get('telefono')?.touched"
+                   class="text-danger">
+                <span *ngIf="patientForm.get('telefono')?.errors?.['pattern']">
+                  El teléfono debe tener 10 digitos.
+                </span>
+              </div>
+            </div>
+        </div>
+
+        <!-- Datos de Nacimiento -->
+        <div class="row mb-4">
+          <h4>Datos de Nacimiento</h4>
+          <div class="col-md-6 mb-3">
+            <label class="form-label" [ngClass]="{'required': patientForm.get('tipo_identificacion')?.value !== 'no_identificado'}">Fecha de Nacimiento <span *ngIf="patientForm.get('tipo_identificacion')?.value !== 'no_identificado'">*</span></label>
+            <input type="date" class="form-control" formControlName="fecha_nacimiento">
+            <div *ngIf="patientForm.get('fecha_nacimiento')?.invalid && patientForm.get('fecha_nacimiento')?.touched && patientForm.get('tipo_identificacion')?.value !== 'no_identificado'" class="text-danger">
+              <span *ngIf="patientForm.get('fecha_nacimiento')?.errors?.['required']">Este campo es obligatorio.</span>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label" [ngClass]="{'required': patientForm.get('tipo_identificacion')?.value !== 'no_identificado'}">Lugar de Nacimiento <span *ngIf="patientForm.get('tipo_identificacion')?.value !== 'no_identificado'">*</span></label>
+            <select class="form-select" formControlName="lugar_nacimiento">
+              <option value="">Seleccione un país</option>
+              <option *ngFor="let pais of paises" [value]="pais">{{ pais }}</option>
+            </select>
+            <div *ngIf="patientForm.get('lugar_nacimiento')?.invalid && patientForm.get('lugar_nacimiento')?.touched && patientForm.get('tipo_identificacion')?.value !== 'no_identificado'" class="text-danger">
+              <span *ngIf="patientForm.get('lugar_nacimiento')?.errors?.['required']">Este campo es obligatorio.</span>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label" [ngClass]="{'required': patientForm.get('tipo_identificacion')?.value !== 'no_identificado'}">Nacionalidad <span *ngIf="patientForm.get('tipo_identificacion')?.value !== 'no_identificado'">*</span></label>
+            <select class="form-select" formControlName="nacionalidad">
+              <option value="">Seleccione una nacionalidad</option>
+              <option value="Argentina">Argentina</option>
+              <option value="Boliviana">Boliviana</option>
+              <option value="Brasileña">Brasileña</option>
+              <option value="Chilena">Chilena</option>
+              <option value="Colombiana">Colombiana</option>
+              <option value="Costarricense">Costarricense</option>
+              <option value="Cubana">Cubana</option>
+              <option value="Ecuatoriana">Ecuatoriana</option>
+              <option value="Salvadoreña">Salvadoreña</option>
+              <option value="Guatemalteca">Guatemalteca</option>
+              <option value="Haitiana">Haitiana</option>
+              <option value="Hondureña">Hondureña</option>
+              <option value="Mexicana">Mexicana</option>
+              <option value="Nicaragüense">Nicaragüense</option>
+              <option value="Panameña">Panameña</option>
+              <option value="Paraguaya">Paraguaya</option>
+              <option value="Peruana">Peruana</option>
+              <option value="Dominicana">Dominicana</option>
+              <option value="Uruguaya">Uruguaya</option>
+              <option value="Venezolana">Venezolana</option>
+            </select>
+            <div *ngIf="patientForm.get('nacionalidad')?.invalid && patientForm.get('nacionalidad')?.touched && patientForm.get('tipo_identificacion')?.value !== 'no_identificado'" class="text-danger">
+              <span *ngIf="patientForm.get('nacionalidad')?.errors?.['required']">Este campo es obligatorio.</span>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label" [ngClass]="{'required': patientForm.get('tipo_identificacion')?.value !== 'no_identificado'}">Sexo <span *ngIf="patientForm.get('tipo_identificacion')?.value !== 'no_identificado'">*</span></label>
+            <select class="form-select" formControlName="sexo">
+              <option value="">Seleccione...</option>
+              <option value="H">Hombre</option>
+              <option value="M">Mujer</option>
+            </select>
+            <div *ngIf="patientForm.get('sexo')?.invalid && patientForm.get('sexo')?.touched && patientForm.get('tipo_identificacion')?.value !== 'no_identificado'" class="text-danger">
+              <span *ngIf="patientForm.get('sexo')?.errors?.['required']">Este campo es obligatorio.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Acordeón para información adicional -->
+        <div class="accordion mb-4">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" 
+                      (click)="toggleAdditionalInfo()"
+                      [attr.aria-expanded]="showAdditionalInfo">
+                Información Adicional (Opcional)
+              </button>
+            </h2>
+            <div class="accordion-collapse collapse" [class.show]="showAdditionalInfo">
+              <div class="accordion-body">
+                <!-- Dirección -->
+                <div class="row mb-4">
+                  <h4>Dirección</h4>
+                  <div class="col-md-12 mb-3">
+                    <label class="form-label">Dirección *</label>
+                    <input type="text" class="form-control" formControlName="direccion">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Barrio</label>
+                    <input type="text" class="form-control" formControlName="barrio">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Provincia</label>
+                    <select class="form-select" formControlName="provincia_id" (change)="onProvinciaChange($event)">
+                      <option value="">Seleccione una provincia</option>
+                      <option *ngFor="let provincia of provincias" [value]="provincia.id">
+                        {{provincia.nombre}}
+                      </option>
+                    </select>
+                  </div>
+                  
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Cantón</label>
+                    <select class="form-select" formControlName="canton_id" (change)="onCantonChange($event)"
+                            [disabled]="!patientForm.get('provincia_id')?.value">
+                      <option value="">Seleccione un cantón</option>
+                      <option *ngFor="let canton of cantones" [value]="canton.id">
+                        {{canton.nombre}}
+                      </option>
+                    </select>
+                  </div>
+                  
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Parroquia</label>
+                    <select class="form-select" formControlName="parroquia_id"
+                            [disabled]="!patientForm.get('canton_id')?.value">
+                      <option value="">Seleccione una parroquia</option>
+                      <option *ngFor="let parroquia of parroquias" [value]="parroquia.id">
+                        {{parroquia.nombre}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Información Adicional -->
+                <div class="row mb-4">
+                  <h4>Información Complementaria</h4>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Estado Civil *</label>
+                    <select class="form-select" formControlName="estado_civil">
+                      <option value="">Seleccione...</option>
+                      <option value="S">Soltero/a</option>
+                      <option value="C">Casado/a</option>
+                      <option value="D">Divorciado/a</option>
+                      <option value="V">Viudo/a</option>
+                      <option value="UL">Unión Libre</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Grupo Cultural</label>
+                    <input type="text" class="form-control" formControlName="grupo_cultural">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Instrucción</label>
+                    <input type="text" class="form-control" formControlName="instruccion">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Ocupación</label>
+                    <input type="text" class="form-control" formControlName="ocupacion">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Empresa donde trabaja</label>
+                    <input type="text" class="form-control" formControlName="empresa_trabajo">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Tipo de Seguro</label>
+                    <input type="text" class="form-control" formControlName="tipo_seguro">
+                  </div>
+                </div>
+
+                <!-- Contacto de Emergencia -->
+                <div class="row mb-4">
+                  <h4>Contacto de Emergencia</h4>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Nombre del Contacto</label>
+                    <input type="text" class="form-control" formControlName="contacto_emergencia">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Parentesco</label>
+                    <input type="text" class="form-control" formControlName="parentesco_emergencia">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Dirección</label>
+                    <input type="text" class="form-control" formControlName="direccion_emergencia">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" formControlName="telefono_emergencia">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-secondary" (click)="cancel()">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary" 
+                  [disabled]="patientForm.invalid || loading">
+            {{ loading ? 'Guardando...' : (isEditing ? 'Actualizar' : 'Guardar') }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

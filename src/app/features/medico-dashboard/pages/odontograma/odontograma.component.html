@@ -1,0 +1,366 @@
+<div class="odontograma-container" [class.readonly-mode]="modoLectura">
+  <div class="card">
+    <div class="card-header">
+      <div class="header-content">
+        <h2 class="card-title">🦷 Odontograma {{ esAdulto ? 'Adulto' : 'Niño' }}</h2>
+        <div class="tipo-info">
+          <small class="text-muted">Tipo determinado automáticamente por edad del paciente</small>
+        </div>
+      </div>
+      <p class="card-subtitle" *ngIf="modoLectura">Modo de lectura</p>
+    </div>
+
+    <div class="card-content">
+      <!-- Solo tabla de piezas seleccionadas (para vista en Evolución) -->
+      <ng-container *ngIf="soloTabla; else vistaCompleta">
+        <div class="piezas-seleccionadas">
+          <h3>Piezas Seleccionadas</h3>
+          <div *ngIf="piezasSeleccionadas.length === 0" class="no-data-message">
+            <p class="text-muted">No hay piezas dentales seleccionadas</p>
+          </div>
+          <div class="table-container" *ngIf="piezasSeleccionadas.length > 0">
+            <table class="piezas-table">
+              <thead>
+                <tr>
+                  <th>Pieza</th>
+                  <th>Caras Seleccionadas</th>
+                  <th>Estado</th>
+                  <th>Movilidad</th>
+                  <th>Recesión</th>
+                  <th *ngIf="!modoLectura">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pieza of piezasSeleccionadas; let i = index">
+                  <td class="pieza-numero-cell">{{ pieza.numeroPieza }}</td>
+                  <td class="caras-cell">{{ getCarasSeleccionadas(pieza) }}</td>
+                  <td class="estado-cell">
+                    <span class="estado-badge" [class]="getClaseEstado(pieza)">
+                      {{ getEstadoPieza(pieza) }}
+                    </span>
+                  </td>
+                  <td class="movilidad-cell">{{ pieza.movilidad }}</td>
+                  <td class="recesion-cell">{{ pieza.recesion }}</td>
+                  <td *ngIf="!modoLectura" class="acciones-cell">
+                    <button type="button"
+                            class="btn-eliminar"
+                            (click)="eliminarPieza(i)"
+                            title="Eliminar pieza">
+                      🗑️
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #vistaCompleta>
+      <!-- Loading spinner -->
+      <div class="loading-container" *ngIf="cargando">
+        <div class="spinner"></div>
+      </div>
+
+      <!-- Formulario principal -->
+      <form [formGroup]="odontogramaForm" (ngSubmit)="guardarOdontograma()" *ngIf="!cargando">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="observaciones">Observaciones</label>
+            <textarea id="observaciones"
+                    formControlName="observaciones" 
+                    [readonly]="modoLectura"
+                    placeholder="Ingrese las observaciones generales"
+                    class="full-width"></textarea>
+          </div>
+        </div>
+
+        <!-- Odontograma Visual -->
+        <div class="odontograma-visual">
+          <div class="cuadrantes-container">
+            <!-- Cuadrante Superior Derecho -->
+            <div class="cuadrante cuadrante-superior-derecho">
+              <div class="piezas-row">
+                <div *ngFor="let pieza of getPiezasActuales()[0]" 
+                     class="pieza-dental"
+                     [class.disabled]="modoLectura">
+                  <div class="pieza-numero">{{ pieza }}</div>
+                  <div class="pieza-caras">
+                    <div class="cara cara-mesial"
+                         (click)="abrirModal(pieza, 'M')"
+                         title="Mesial"></div>
+                    <div class="cara cara-distal"
+                         (click)="abrirModal(pieza, 'D')"
+                         title="Distal"></div>
+                    <div class="cara cara-vestibular"
+                         (click)="abrirModal(pieza, 'V')"
+                         title="Vestibular"></div>
+                    <div class="cara" [class]="isLowerTooth(pieza) ? 'cara-lingual' : 'cara-palatina'"
+                         (click)="abrirModal(pieza, isLowerTooth(pieza) ? 'L' : 'P')"
+                         [title]="isLowerTooth(pieza) ? 'Lingual' : 'Palatina'"></div>
+                    <div class="cara" [class]="isIncisor(pieza) ? 'cara-incisal' : 'cara-oclusal'"
+                         (click)="abrirModal(pieza, isIncisor(pieza) ? 'I' : 'O')"
+                         [title]="isIncisor(pieza) ? 'Incisal' : 'Oclusal'"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cuadrante Superior Izquierdo -->
+            <div class="cuadrante cuadrante-superior-izquierdo">
+              <div class="piezas-row">
+                <div *ngFor="let pieza of getPiezasActuales()[1]" 
+                     class="pieza-dental"
+                     [class.disabled]="modoLectura">
+                  <div class="pieza-numero">{{ pieza }}</div>
+                  <div class="pieza-caras">
+                    <div class="cara cara-mesial"
+                         (click)="abrirModal(pieza, 'M')"
+                         title="Mesial"></div>
+                    <div class="cara cara-distal"
+                         (click)="abrirModal(pieza, 'D')"
+                         title="Distal"></div>
+                    <div class="cara cara-vestibular"
+                         (click)="abrirModal(pieza, 'V')"
+                         title="Vestibular"></div>
+                    <div class="cara" [class]="isLowerTooth(pieza) ? 'cara-lingual' : 'cara-palatina'"
+                         (click)="abrirModal(pieza, isLowerTooth(pieza) ? 'L' : 'P')"
+                         [title]="isLowerTooth(pieza) ? 'Lingual' : 'Palatina'"></div>
+                    <div class="cara" [class]="isIncisor(pieza) ? 'cara-incisal' : 'cara-oclusal'"
+                         (click)="abrirModal(pieza, isIncisor(pieza) ? 'I' : 'O')"
+                         [title]="isIncisor(pieza) ? 'Incisal' : 'Oclusal'"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cuadrante Inferior Izquierdo -->
+            <div class="cuadrante cuadrante-inferior-izquierdo">
+              <div class="piezas-row">
+                <div *ngFor="let pieza of getPiezasActuales()[2]" 
+                     class="pieza-dental"
+                     [class.disabled]="modoLectura">
+                  <div class="pieza-numero">{{ pieza }}</div>
+                  <div class="pieza-caras">
+                    <div class="cara cara-mesial"
+                         (click)="abrirModal(pieza, 'M')"
+                         title="Mesial"></div>
+                    <div class="cara cara-distal"
+                         (click)="abrirModal(pieza, 'D')"
+                         title="Distal"></div>
+                    <div class="cara cara-vestibular"
+                         (click)="abrirModal(pieza, 'V')"
+                         title="Vestibular"></div>
+                    <div class="cara" [class]="isLowerTooth(pieza) ? 'cara-lingual' : 'cara-palatina'"
+                         (click)="abrirModal(pieza, isLowerTooth(pieza) ? 'L' : 'P')"
+                         [title]="isLowerTooth(pieza) ? 'Lingual' : 'Palatina'"></div>
+                    <div class="cara" [class]="isIncisor(pieza) ? 'cara-incisal' : 'cara-oclusal'"
+                         (click)="abrirModal(pieza, isIncisor(pieza) ? 'I' : 'O')"
+                         [title]="isIncisor(pieza) ? 'Incisal' : 'Oclusal'"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cuadrante Inferior Derecho -->
+            <div class="cuadrante cuadrante-inferior-derecho">
+              <div class="piezas-row">
+                <div *ngFor="let pieza of getPiezasActuales()[3]" 
+                     class="pieza-dental"
+                     [class.disabled]="modoLectura">
+                  <div class="pieza-numero">{{ pieza }}</div>
+                  <div class="pieza-caras">
+                    <div class="cara cara-mesial"
+                         (click)="abrirModal(pieza, 'M')"
+                         title="Mesial"></div>
+                    <div class="cara cara-distal"
+                         (click)="abrirModal(pieza, 'D')"
+                         title="Distal"></div>
+                    <div class="cara cara-vestibular"
+                         (click)="abrirModal(pieza, 'V')"
+                         title="Vestibular"></div>
+                    <div class="cara" [class]="isLowerTooth(pieza) ? 'cara-lingual' : 'cara-palatina'"
+                         (click)="abrirModal(pieza, isLowerTooth(pieza) ? 'L' : 'P')"
+                         [title]="isLowerTooth(pieza) ? 'Lingual' : 'Palatina'"></div>
+                    <div class="cara" [class]="isIncisor(pieza) ? 'cara-incisal' : 'cara-oclusal'"
+                         (click)="abrirModal(pieza, isIncisor(pieza) ? 'I' : 'O')"
+                         [title]="isIncisor(pieza) ? 'Incisal' : 'Oclusal'"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabla de Piezas Seleccionadas -->
+        <div class="piezas-seleccionadas">
+          <h3>Piezas Seleccionadas</h3>
+          <div *ngIf="piezasSeleccionadas.length === 0" class="no-data-message">
+            <p class="text-muted">No hay piezas dentales seleccionadas</p>
+          </div>
+          <div class="table-container" *ngIf="piezasSeleccionadas.length > 0">
+            <table class="piezas-table">
+              <thead>
+                <tr>
+                  <th>Pieza</th>
+                  <th>Caras Seleccionadas</th>
+                  <th>Estado</th>
+                  <th>Diagnóstico</th>
+                  <th>Procedimiento</th>
+                  <th>Movilidad</th>
+                  <th>Recesión</th>
+                  <th *ngIf="!modoLectura">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pieza of piezasSeleccionadas; let i = index">
+                  <td class="pieza-numero-cell">{{ pieza.numeroPieza }}</td>
+                  <td class="caras-cell">{{ getCarasSeleccionadas(pieza) }}</td>
+                  <td class="estado-cell">
+                    <span class="estado-badge" [class]="getClaseEstado(pieza)">
+                      {{ getEstadoPieza(pieza) }}
+                    </span>
+                  </td>
+                  <!-- Diagnóstico/Procedimiento columnas eliminadas -->
+                  <td class="movilidad-cell">{{ pieza.movilidad }}</td>
+                  <td class="recesion-cell">{{ pieza.recesion }}</td>
+                  <td *ngIf="!modoLectura" class="acciones-cell">
+                    <button type="button"
+                            class="btn-eliminar"
+                            (click)="eliminarPieza(i)"
+                            title="Eliminar pieza">
+                      🗑️
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sección de Imagen del Paladar -->
+        <div class="imagen-paladar-section" *ngIf="canEdit">
+          <h3>Imagen del Paladar</h3>
+
+          <!-- Vista previa de imagen si existe -->
+          <div *ngIf="imagenPaladar" class="imagen-preview">
+            <img [src]="imagenPaladar" alt="Imagen del paladar" class="imagen-paladar-display">
+            <p class="text-muted mt-2">Imagen del paladar del paciente</p>
+          </div>
+
+          <!-- Formulario de subida si se puede editar (permitir actualizar imagen) -->
+          <div *ngIf="canEdit" class="upload-form">
+            <input type="file"
+                   #fileInput
+                   accept=".jpg,.jpeg"
+                   (change)="onFileSelected($event)"
+                   style="display: none">
+
+            <button type="button"
+                    class="btn btn-primary"
+                    (click)="fileInput.click()"
+                    [disabled]="cargando">
+              <i class="fas fa-upload me-2"></i>
+              {{ cargando ? 'Procesando...' : (imagenPaladar ? 'Cambiar Imagen (.jpg)' : 'Seleccionar Imagen (.jpg)') }}
+            </button>
+
+            <div *ngIf="imagenSeleccionada" class="file-info mt-2">
+              <small class="text-muted">
+                <i class="fas fa-file-image me-1"></i>
+                {{ nombreArchivoSeleccionado }}
+              </small>
+              <button type="button"
+                      class="btn btn-success btn-sm ms-2"
+                      (click)="guardarOdontogramaConImagen()"
+                      [disabled]="cargando">
+                <i class="fas fa-save me-1"></i>
+                {{ cargando ? 'Guardando...' : 'Actualizar Imagen' }}
+              </button>
+              <button type="button"
+                      class="btn btn-secondary btn-sm ms-1"
+                      (click)="cancelarSeleccion()">
+                <i class="fas fa-times me-1"></i>
+                Cancelar
+              </button>
+            </div>
+          </div>
+
+          <!-- Mensaje de éxito/error -->
+          <div *ngIf="mensajeImagen" class="alert mt-2" [ngClass]="mensajeImagen.includes('correctamente') ? 'alert-success' : 'alert-danger'">
+            <i class="fas" [ngClass]="mensajeImagen.includes('correctamente') ? 'fa-check-circle' : 'fa-exclamation-circle'"></i>
+            {{ mensajeImagen }}
+          </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="actions-container">
+          <button type="button"
+                  class="btn btn-secondary"
+                  [disabled]="cargando"
+                  routerLink="../">
+            Cancelar
+          </button>
+        </div>
+      </form>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Modal para selección de cara -->
+  <div class="modal-overlay" *ngIf="mostrarModal" (click)="cerrarModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Pieza {{ piezaModal }} - Cara {{ getNombreCara(caraModal) }}</h3>
+        <button type="button" class="btn-close" (click)="cerrarModal()">×</button>
+      </div>
+      
+      <form [formGroup]="modalForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Estado de la cara:</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" formControlName="estado" value="sano">
+                <span class="radio-label">✅ Sano</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" formControlName="estado" value="lesion">
+                <span class="radio-label">❌ Lesión / Caries / Restauración</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" formControlName="estado" value="ausente">
+                <span class="radio-label">🚫 Ausente</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="movilidad">Movilidad:</label>
+            <select id="movilidad" formControlName="movilidad" class="form-control">
+              <option value="1">1 - Casi sin movilidad</option>
+              <option value="2">2 - Un poco</option>
+              <option value="3">3 - Mucha</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="recesion">Recesión:</label>
+            <select id="recesion" formControlName="recesion" class="form-control">
+              <option value="1">1 - Leve</option>
+              <option value="2">2 - Moderada</option>
+              <option value="3">3 - Severa</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="cerrarModal()">
+            Cancelar
+          </button>
+          <button type="button" class="btn btn-primary" (click)="guardarSeleccion()">
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

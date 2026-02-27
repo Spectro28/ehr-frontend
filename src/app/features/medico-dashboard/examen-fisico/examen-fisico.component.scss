@@ -1,0 +1,54 @@
+.examen-fisico { position: relative; }
+.mapa .body-part.active { border-color: #0d6efd; background: #e7f1ff; }
+.panel-lateral { 
+  width: 400px; 
+  max-width: 100%; 
+  min-height: 500px;
+}
+.lesiones-grid { display: flex; flex-wrap: wrap; }
+.overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.45); pointer-events: none; border-radius: 6px; }
+.bloqueado { filter: grayscale(0.6); }
+.cuerpos { 
+  display: flex; 
+  gap: 16px; 
+  margin-bottom: 12px; 
+  justify-content: center;
+}
+
+.body-svg-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.body-svg { 
+  width: 200px; 
+  height: 400px;
+  border: 1px solid #ddd; 
+  border-radius: 4px;
+  transition: transform 0.2s ease;
+}
+
+.body-svg:hover {
+  transform: scale(1.02);
+}
+
+.body-point {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.body-point:hover {
+  fill: #ff4444 !important;
+  r: 5 !important;
+  stroke: #fff !important;
+  stroke-width: 1 !important;
+}
+
+.body-point.selected {
+  fill: #0d6efd !important;
+  stroke: #fff !important;
+  stroke-width: 2 !important;
+  r: 5 !important;
+}
+
+

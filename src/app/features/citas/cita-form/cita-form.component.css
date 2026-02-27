@@ -1,0 +1,246 @@
+.cita-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  select,
+  input[type="date"],
+  textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  select:disabled,
+  input:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+  }
+  
+  .consultorio-info {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 5px;
+  }
+  
+  .error-message {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .btn-cancelar {
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  .btn-guardar {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Estilos para mensajes de validación */
+  .ng-touched.ng-invalid {
+    border-color: #dc3545;
+  }
+  
+  .ng-touched.ng-valid {
+    border-color: #28a745;
+  }
+
+  /* Contenedor principal del formulario */
+.cita-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Estilos para el grupo del buscador */
+  .search-container {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para el input de búsqueda */
+  .search-container input {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background-color: #fff;
+  }
+  
+  .search-container input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+  }
+  
+  /* Contenedor de resultados */
+  .search-results {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+  }
+  
+  /* Estilos para cada item de resultado */
+  .search-result-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .search-result-item:last-child {
+    border-bottom: none;
+  }
+  
+  .search-result-item:hover {
+    background-color: #f8f9fa;
+  }
+  
+  /* Estilo para la cédula en los resultados */
+  .cedula {
+    color: #666;
+    font-size: 0.9em;
+    padding: 2px 8px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+  }
+  
+  /* Mensaje de no resultados */
+  .no-results {
+    padding: 15px;
+    text-align: center;
+    color: #666;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  
+  /* Estilo para el label */
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  /* Estilo para paciente seleccionado */
+  .search-container input.selected {
+    background-color: #f8f9fa;
+    border-color: #4a90e2;
+  }
+  
+  /* Mensaje de error */
+  .error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 5px;
+  }
+  
+  /* Estilos para el scrollbar en los resultados */
+  .search-results::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .search-results::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  .search-results::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+  }
+  
+  .search-results::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+  
+  /* Animaciones */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .search-results {
+    animation: fadeIn 0.2s ease-out;
+  }
+  
+  /* Estilos responsivos */
+  @media (max-width: 768px) {
+    .search-container input {
+      font-size: 16px; /* Mejor para móviles */
+      padding: 10px 12px;
+    }
+  
+    .search-result-item {
+      padding: 10px 12px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .cedula {
+      margin-top: 4px;
+    }
+  }
