@@ -14,7 +14,7 @@ import { ExamenFisicoComponent } from '../examen-fisico/examen-fisico.component'
 
 @Component({
     selector: 'app-evoluciones-paciente',
-    imports: [CommonModule, RouterModule, OdontogramaComponent, ExamenFisicoComponent],
+    imports: [CommonModule, RouterModule, ExamenFisicoComponent],
     templateUrl: './evoluciones-paciente.component.html',
     styleUrls: ['./evoluciones-paciente.component.css']
 })

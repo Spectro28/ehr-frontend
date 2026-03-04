@@ -15,9 +15,6 @@ import { AuthService } from '../../core/services/auth.service';
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
-    PatientsComponent,
-    ConsultoriosComponent,
-    CitasListComponent,
     RoleSwitcherComponent
 ],
     templateUrl: './secretary-dashboard.component.html',

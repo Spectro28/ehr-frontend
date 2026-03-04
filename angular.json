@@ -21,6 +21,29 @@
               "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.app.json",
+            "allowedCommonJsDependencies": [
+              "canvg",
+              "rgbcolor",
+              "raf",
+              "html2canvas",
+              "dompurify",
+              "jspdf-autotable",
+              "core-js/modules/es.promise",
+              "core-js/modules/es.promise.js",
+              "core-js/modules/es.string.match.js",
+              "core-js/modules/es.string.replace.js",
+              "core-js/modules/es.string.starts-with.js",
+              "core-js/modules/es.array.iterator.js",
+              "core-js/modules/web.dom-collections.iterator.js",
+              "core-js/modules/es.array.reduce.js",
+              "core-js/modules/es.string.ends-with.js",
+              "core-js/modules/es.string.split.js",
+              "core-js/modules/es.string.trim.js",
+              "core-js/modules/es.array.index-of.js",
+              "core-js/modules/es.string.includes.js",
+              "core-js/modules/es.array.reverse.js",
+              "core-js/modules/es.regexp.to-string.js"
+            ],
             "assets": [
               {
                 "glob": "**/*",
@@ -42,16 +65,14 @@
           },
           "configurations": {
             "production": {
-              "budgets": [
-                
-              ],
+              "budgets": [],
               "outputHashing": "all",
               "fileReplacements": [
-            {
-              "replace": "src/environments/environment.ts",
-              "with": "src/environments/environment.prod.ts"
-            }
-          ]
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             },
             "development": {
               "optimization": false,
@@ -83,15 +104,6 @@
               "zone.js",
               "zone.js/testing"
             ],
-            
-            "allowedCommonJsDependencies": [
-  "core-js/modules/es.promise",
-  "jspdf-autotable",
-  "canvg",
-  "rgbcolor",
-  "raf"
-],
-
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               {
