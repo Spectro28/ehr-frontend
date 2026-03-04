@@ -8,11 +8,10 @@ import { RoleSwitcherComponent } from '../../shared/components/role-switcher/rol
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
-  selector: 'app-enfermera-dashboard',
-  standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, RoleSwitcherComponent],
-  templateUrl: './enfermera-dashboard.component.html',
-  styleUrl: './enfermera-dashboard.component.css'
+    selector: 'app-enfermera-dashboard',
+    imports: [CommonModule, RouterModule, ReactiveFormsModule, RoleSwitcherComponent],
+    templateUrl: './enfermera-dashboard.component.html',
+    styleUrl: './enfermera-dashboard.component.css'
 })
 export class EnfermeraDashboardComponent {
   pendingAppointments: any[] = [];

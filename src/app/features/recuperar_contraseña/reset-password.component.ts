@@ -5,10 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
-  selector: 'app-reset-password',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  template: `
+    selector: 'app-reset-password',
+    imports: [CommonModule, FormsModule],
+    template: `
     <div class="reset-password-container">
   <form (ngSubmit)="onSubmit()" #resetForm="ngForm" class="reset-form">
     <h2 class="form-title">Restablecer Contraseña</h2>
@@ -61,7 +60,7 @@ import { AuthService } from '../../core/services/auth.service';
 </div>
 
   `,
-  styles: [`
+    styles: [`
     .reset-password-container {
   display: flex;
   justify-content: center;

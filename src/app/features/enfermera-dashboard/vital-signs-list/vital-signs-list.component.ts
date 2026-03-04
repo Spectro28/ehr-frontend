@@ -8,16 +8,15 @@ import { catchError, finalize, Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-vital-signs-list',
-  standalone: true, // Asegúrate de que el componente sea standalone
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    DatePipe
-  ],
-  templateUrl: './vital-signs-list.component.html',
-  styleUrls: ['./vital-signs-list.component.css']
+    selector: 'app-vital-signs-list', // Asegúrate de que el componente sea standalone
+    imports: [
+        CommonModule,
+        RouterModule,
+        ReactiveFormsModule,
+        DatePipe
+    ],
+    templateUrl: './vital-signs-list.component.html',
+    styleUrls: ['./vital-signs-list.component.css']
 })
 export class VitalSignsListComponent implements OnInit, OnDestroy {
   vitalSigns: any[] = [];

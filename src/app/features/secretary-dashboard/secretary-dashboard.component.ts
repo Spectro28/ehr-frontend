@@ -9,21 +9,20 @@ import { RoleSwitcherComponent } from '../../shared/components/role-switcher/rol
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
-  selector: 'app-secretary-dashboard',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
-    PatientsComponent,
-    ConsultoriosComponent,
-    CitasListComponent,
-    RoleSwitcherComponent
-  ],
-  templateUrl: './secretary-dashboard.component.html',
-  styleUrls: ['./secretary-dashboard.component.css']
+    selector: 'app-secretary-dashboard',
+    imports: [
+        CommonModule,
+        RouterModule,
+        RouterOutlet,
+        RouterLink,
+        RouterLinkActive,
+        PatientsComponent,
+        ConsultoriosComponent,
+        CitasListComponent,
+        RoleSwitcherComponent
+    ],
+    templateUrl: './secretary-dashboard.component.html',
+    styleUrls: ['./secretary-dashboard.component.css']
 })
 export class SecretaryDashboardComponent {
   activeTab = 'patients';

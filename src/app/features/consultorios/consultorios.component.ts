@@ -14,15 +14,14 @@ interface DiaHorario {
 
 
 @Component({
-  selector: 'app-consultorios',
-  standalone: true,
-  imports: [
-    CommonModule, 
-    FormsModule,
-    ConsultorioHorarioComponent
-  ],
-  templateUrl: './consultorios.component.html',
-  styleUrls: ['./consultorios.component.scss']
+    selector: 'app-consultorios',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ConsultorioHorarioComponent
+    ],
+    templateUrl: './consultorios.component.html',
+    styleUrls: ['./consultorios.component.scss']
 })
 export class ConsultoriosComponent implements OnInit {
   consultorios: Consultorio[] = [];

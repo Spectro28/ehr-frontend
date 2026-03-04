@@ -7,11 +7,10 @@ import { FormsModule } from '@angular/forms';
 import { Cita } from '../../../core/interfaces/cita.interface';
 
 @Component({
-  selector: 'app-citas-list',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './citas-list.component.html',
-  styleUrls: ['./citas-list.component.css']
+    selector: 'app-citas-list',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './citas-list.component.html',
+    styleUrls: ['./citas-list.component.css']
 })
 export class CitasListComponent implements OnInit {
   citas: Cita[] = [];

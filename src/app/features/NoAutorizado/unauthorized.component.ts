@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
-  selector: 'app-unauthorized',
-  template: `
+    selector: 'app-unauthorized',
+    template: `
     <div class="unauthorized-container">
       <div class="unauthorized-content">
         <h1>🚫 Acceso No Autorizado</h1>
@@ -21,7 +21,7 @@ import { AuthService } from '../../core/services/auth.service';
       </div>
     </div>
   `,
-  styles: [`
+    styles: [`
     .unauthorized-container {
       display: flex;
       justify-content: center;
@@ -81,7 +81,8 @@ import { AuthService } from '../../core/services/auth.service';
     .btn-secondary:hover {
       background-color: #545b62;
     }
-  `]
+  `],
+    standalone: false
 })
 export class UnauthorizedComponent {
   userRole: string | null = null;

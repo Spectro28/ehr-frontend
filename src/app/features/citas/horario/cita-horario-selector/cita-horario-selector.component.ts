@@ -19,11 +19,10 @@ export interface HorarioConsultorio {
 }
 
 @Component({
-  selector: 'app-cita-horario-selector',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './cita-horario-selector.component.html',
-  styleUrls: ['./cita-horario-selector.component.css']
+    selector: 'app-cita-horario-selector',
+    imports: [CommonModule],
+    templateUrl: './cita-horario-selector.component.html',
+    styleUrls: ['./cita-horario-selector.component.css']
 })
 export class CitaHorarioSelectorComponent implements OnInit {
   @Input() consultorio: any;

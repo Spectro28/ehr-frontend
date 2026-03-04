@@ -4,11 +4,10 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
 import { CatalogosService } from '../../../core/services/catalogos.service';
 
 @Component({
-  selector: 'app-catalogos',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './catalogos.component.html',
-  styleUrls: ['./catalogos.component.css']
+    selector: 'app-catalogos',
+    imports: [CommonModule, ReactiveFormsModule, FormsModule],
+    templateUrl: './catalogos.component.html',
+    styleUrls: ['./catalogos.component.css']
 })
 export class CatalogosComponent implements OnInit {
   activeCatalog: string = 'ubicaciones';

@@ -6,11 +6,10 @@ import { PatientService } from '../../../core/services/patient.service';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
-  selector: 'app-patient-form',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
-  templateUrl: './patient-form.component.html',
-  styleUrls: ['./patient-form.component.css']
+    selector: 'app-patient-form',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+    templateUrl: './patient-form.component.html',
+    styleUrls: ['./patient-form.component.css']
 })
 export class PatientFormComponent implements OnInit {
   patientForm: FormGroup;

@@ -7,17 +7,16 @@ import { AdminComponent } from '../admin/admin.component';
 import { CatalogosComponent } from '../admin/catalogos/catalogos.component';
 
 @Component({
-  selector: 'app-admin-dashboard',
-  standalone: true,
-  imports: [
-    CommonModule, 
-    RouterModule,
-    AdminComponent,    // Agregar aquí
-    ConsultoriosComponent,  // Agregar aquí
-    CatalogosComponent  // Agregar aquí
-  ],
-  templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.css']
+    selector: 'app-admin-dashboard',
+    imports: [
+        CommonModule,
+        RouterModule,
+        AdminComponent, // Agregar aquí
+        ConsultoriosComponent, // Agregar aquí
+        CatalogosComponent // Agregar aquí
+    ],
+    templateUrl: './admin-dashboard.component.html',
+    styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
   activeTab = 'admin';

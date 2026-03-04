@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-certificado-medico-modal',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './certificado-medico-modal.component.html',
-  styleUrls: ['./certificado-medico-modal.component.css']
+    selector: 'app-certificado-medico-modal',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './certificado-medico-modal.component.html',
+    styleUrls: ['./certificado-medico-modal.component.css']
 })
 export class CertificadoMedicoModalComponent {
   @Input() evolucion: any;

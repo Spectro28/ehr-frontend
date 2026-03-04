@@ -5,10 +5,9 @@ import { AuthService } from '../../core/services/auth.service';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-forgot-password',
-  standalone: true,
-  imports: [CommonModule, FormsModule,RouterModule],
-  template: `
+    selector: 'app-forgot-password',
+    imports: [CommonModule, FormsModule, RouterModule],
+    template: `
     <div class="forgot-password-container">
   <form (ngSubmit)="onSubmit()" #forgotForm="ngForm" class="forgot-form">
     <h2 class="form-title">Recuperar Contraseña</h2>
@@ -53,7 +52,7 @@ import { RouterModule } from '@angular/router';
 </div>
 
   `,
-  styles: [`
+    styles: [`
     .forgot-password-container {
   display: flex;
   justify-content: center;

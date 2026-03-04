@@ -9,11 +9,10 @@ import { OdontogramaService } from '../../core/services/odontograma.service';
 import { RoleSwitcherComponent } from '../../shared/components/role-switcher/role-switcher.component';
 
 @Component({
-  selector: 'app-medico-dashboard',
-  standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, RoleSwitcherComponent],
-  templateUrl: './medico-dashboard.component.html',
-  styleUrls: ['./medico-dashboard.component.css']
+    selector: 'app-medico-dashboard',
+    imports: [CommonModule, RouterModule, ReactiveFormsModule, RoleSwitcherComponent],
+    templateUrl: './medico-dashboard.component.html',
+    styleUrls: ['./medico-dashboard.component.css']
 })
 export class MedicoDashboardComponent implements OnInit {
   pacientesConEvolucion: any[] = [];

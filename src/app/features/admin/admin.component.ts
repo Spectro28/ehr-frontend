@@ -33,11 +33,10 @@ interface CreateUserRequest {
 }
 
 @Component({
-  selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css'],
-  standalone: true,
-  imports: [CommonModule, FormsModule]
+    selector: 'app-admin',
+    templateUrl: './admin.component.html',
+    styleUrls: ['./admin.component.css'],
+    imports: [CommonModule, FormsModule]
 })
 export class AdminComponent implements OnInit {
   users: any[] = [];

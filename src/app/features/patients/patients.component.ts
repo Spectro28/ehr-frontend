@@ -5,11 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { PatientService } from '../../core/services/patient.service';
 
 @Component({
-  selector: 'app-patient',
-  standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
-  templateUrl: './patients.component.html',
-  styleUrls: ['./patients.component.css']
+    selector: 'app-patient',
+    imports: [CommonModule, RouterModule, FormsModule],
+    templateUrl: './patients.component.html',
+    styleUrls: ['./patients.component.css']
 })
 export class PatientsComponent implements OnInit {
   patients: any[] = [];

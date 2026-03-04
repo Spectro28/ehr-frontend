@@ -13,11 +13,10 @@ import { ExamenFisicoComponent } from '../examen-fisico/examen-fisico.component'
 
 
 @Component({
-  selector: 'app-evoluciones-paciente',
-  standalone: true,
-  imports: [CommonModule, RouterModule, OdontogramaComponent, ExamenFisicoComponent],
-  templateUrl: './evoluciones-paciente.component.html',
-  styleUrls: ['./evoluciones-paciente.component.css']
+    selector: 'app-evoluciones-paciente',
+    imports: [CommonModule, RouterModule, OdontogramaComponent, ExamenFisicoComponent],
+    templateUrl: './evoluciones-paciente.component.html',
+    styleUrls: ['./evoluciones-paciente.component.css']
 })
 export class EvolucionesPacienteComponent implements OnInit {
   showDropdown = false;

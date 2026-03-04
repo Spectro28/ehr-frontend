@@ -2,12 +2,11 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-landing',
-  standalone: true,
-  imports: [RouterLink],
-  templateUrl: './landing.component.html',
-  styleUrl: './landing.component.css',
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-landing',
+    imports: [RouterLink],
+    templateUrl: './landing.component.html',
+    styleUrl: './landing.component.css',
+    encapsulation: ViewEncapsulation.None
 })
 export class LandingComponent implements OnInit {
 

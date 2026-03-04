@@ -33,11 +33,10 @@ interface ApiResponse<T> {
 }
 
 @Component({
-  selector: 'app-vital-signs-form',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
-  templateUrl: './vital-signs-form.component.html',
-  styleUrls: ['./vital-signs-form.component.css']
+    selector: 'app-vital-signs-form',
+    imports: [CommonModule, ReactiveFormsModule, RouterModule],
+    templateUrl: './vital-signs-form.component.html',
+    styleUrls: ['./vital-signs-form.component.css']
 })
 export class VitalSignsFormComponent implements OnInit {
   vitalSignsForm: FormGroup;

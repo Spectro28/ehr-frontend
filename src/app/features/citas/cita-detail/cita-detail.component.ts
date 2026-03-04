@@ -32,11 +32,10 @@ interface Cita {
 }
 
 @Component({
-  selector: 'app-citas-detail',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './cita-detail.component.html',
-  styleUrls: ['./cita-detail.component.css']
+    selector: 'app-citas-detail',
+    imports: [CommonModule],
+    templateUrl: './cita-detail.component.html',
+    styleUrls: ['./cita-detail.component.css']
 })
 export class CitasDetailComponent implements OnInit {
   cita: any = null;

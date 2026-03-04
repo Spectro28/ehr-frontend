@@ -10,11 +10,10 @@ interface HorarioConsulta {
 }
 
 @Component({
-  selector: 'app-consultorio-horario',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './consultorio-horario.component.html',
-  styleUrls: ['./consultorio-horario.component.scss']
+    selector: 'app-consultorio-horario',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './consultorio-horario.component.html',
+    styleUrls: ['./consultorio-horario.component.scss']
 })
 export class ConsultorioHorarioComponent implements OnInit {
   mensajeError: string = '';

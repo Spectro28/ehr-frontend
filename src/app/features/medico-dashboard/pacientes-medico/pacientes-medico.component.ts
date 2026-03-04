@@ -7,11 +7,10 @@ import { PatientsComponent } from '../../patients/patients.component';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
-  selector: 'app-pacientes-medico',
-  standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
-  templateUrl: './pacientes-medico.component.html',
-  styleUrls: ['./pacientes-medico.component.css']
+    selector: 'app-pacientes-medico',
+    imports: [CommonModule, RouterModule, FormsModule],
+    templateUrl: './pacientes-medico.component.html',
+    styleUrls: ['./pacientes-medico.component.css']
 })
 export class PacientesMedicoComponent extends PatientsComponent {
   

@@ -5,11 +5,10 @@ import { ExamenFisicoService, BodyPartItem, LesionCatalogItem, ExamenFisicoItemD
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
-  selector: 'app-examen-fisico',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './examen-fisico.component.html',
-  styleUrls: ['./examen-fisico.component.scss']
+    selector: 'app-examen-fisico',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './examen-fisico.component.html',
+    styleUrls: ['./examen-fisico.component.scss']
 })
 export class ExamenFisicoComponent implements OnInit {
   @Input() evolucionId!: number;

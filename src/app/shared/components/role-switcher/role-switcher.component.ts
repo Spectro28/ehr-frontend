@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
-  selector: 'app-role-switcher',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './role-switcher.component.html',
-  styleUrls: ['./role-switcher.component.css']
+    selector: 'app-role-switcher',
+    imports: [CommonModule],
+    templateUrl: './role-switcher.component.html',
+    styleUrls: ['./role-switcher.component.css']
 })
 export class RoleSwitcherComponent implements OnInit {
   availableRoles: string[] = [];

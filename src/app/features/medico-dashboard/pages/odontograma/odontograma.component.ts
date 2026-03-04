@@ -40,15 +40,14 @@ interface Procedimiento {
 }
 
 @Component({
-  selector: 'app-odontograma',
-  templateUrl: './odontograma.component.html',
-  styleUrls: ['./odontograma.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule
-  ]
+    selector: 'app-odontograma',
+    templateUrl: './odontograma.component.html',
+    styleUrls: ['./odontograma.component.scss'],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule
+    ]
 })
 export class OdontogramaComponent implements OnInit, OnChanges {
   @Input() evolucionId?: number;

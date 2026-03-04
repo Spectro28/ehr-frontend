@@ -52,18 +52,17 @@ interface PiezaOdontograma extends PiezaDental {
 }
 
 @Component({
-  selector: 'app-evolucion-medica',
-  standalone: true,
-  imports: [
-    CommonModule, 
-    ReactiveFormsModule, 
-    RouterModule, 
-    FormsModule,
-    OdontogramaComponent,
-    ExamenFisicoComponent
-  ],
-  templateUrl: './evolucion-medica.component.html',
-  styleUrls: ['./evolucion-medica.component.css']
+    selector: 'app-evolucion-medica',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule,
+        FormsModule,
+        OdontogramaComponent,
+        ExamenFisicoComponent
+    ],
+    templateUrl: './evolucion-medica.component.html',
+    styleUrls: ['./evolucion-medica.component.css']
 })
 export class EvolucionMedicaComponent implements OnInit {
   @ViewChild('odontogramaComponent') odontogramaComponentRef!: any;
