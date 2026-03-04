@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
     selector: 'app-role-switcher',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './role-switcher.component.html',
     styleUrls: ['./role-switcher.component.css']
 })

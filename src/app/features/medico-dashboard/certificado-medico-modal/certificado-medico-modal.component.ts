@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-certificado-medico-modal',
-    imports: [CommonModule, FormsModule],
+    imports: [FormsModule],
     templateUrl: './certificado-medico-modal.component.html',
     styleUrls: ['./certificado-medico-modal.component.css']
 })

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule, RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { PatientsComponent } from '../patients/patients.component';
 import { ConsultoriosComponent } from '../consultorios/consultorios.component';
@@ -11,16 +11,15 @@ import { AuthService } from '../../core/services/auth.service';
 @Component({
     selector: 'app-secretary-dashboard',
     imports: [
-        CommonModule,
-        RouterModule,
-        RouterOutlet,
-        RouterLink,
-        RouterLinkActive,
-        PatientsComponent,
-        ConsultoriosComponent,
-        CitasListComponent,
-        RoleSwitcherComponent
-    ],
+    RouterModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    PatientsComponent,
+    ConsultoriosComponent,
+    CitasListComponent,
+    RoleSwitcherComponent
+],
     templateUrl: './secretary-dashboard.component.html',
     styleUrls: ['./secretary-dashboard.component.css']
 })

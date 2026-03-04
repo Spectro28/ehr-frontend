@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MedicoService } from '../../core/services/medico.service';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
@@ -10,7 +10,7 @@ import { RoleSwitcherComponent } from '../../shared/components/role-switcher/rol
 
 @Component({
     selector: 'app-medico-dashboard',
-    imports: [CommonModule, RouterModule, ReactiveFormsModule, RoleSwitcherComponent],
+    imports: [RouterModule, ReactiveFormsModule, RoleSwitcherComponent],
     templateUrl: './medico-dashboard.component.html',
     styleUrls: ['./medico-dashboard.component.css']
 })

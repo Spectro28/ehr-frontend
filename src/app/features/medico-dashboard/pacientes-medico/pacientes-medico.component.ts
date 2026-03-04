@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PatientService } from '../../../core/services/patient.service';
@@ -8,7 +8,7 @@ import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
     selector: 'app-pacientes-medico',
-    imports: [CommonModule, RouterModule, FormsModule],
+    imports: [RouterModule, FormsModule],
     templateUrl: './pacientes-medico.component.html',
     styleUrls: ['./pacientes-medico.component.css']
 })

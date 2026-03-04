@@ -9,7 +9,9 @@ import { AuthService } from '../../core/services/auth.service';
       <div class="unauthorized-content">
         <h1>🚫 Acceso No Autorizado</h1>
         <p>Lo sentimos, no tienes permisos para acceder a esta página.</p>
-        <p *ngIf="userRole">Tu rol actual es: <strong>{{ userRole }}</strong></p>
+        @if (userRole) {
+          <p>Tu rol actual es: <strong>{{ userRole }}</strong></p>
+        }
         <div class="buttons">
           <button class="btn btn-primary" (click)="goToHome()">
             Ir a mi página principal
@@ -20,7 +22,7 @@ import { AuthService } from '../../core/services/auth.service';
         </div>
       </div>
     </div>
-  `,
+    `,
     styles: [`
     .unauthorized-container {
       display: flex;

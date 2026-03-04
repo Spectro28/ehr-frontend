@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PatientService } from '../../core/services/patient.service';
 
 @Component({
     selector: 'app-patient',
-    imports: [CommonModule, RouterModule, FormsModule],
+    imports: [RouterModule, FormsModule],
     templateUrl: './patients.component.html',
     styleUrls: ['./patients.component.css']
 })

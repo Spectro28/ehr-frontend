@@ -3,13 +3,13 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
-    imports: [CommonModule, FormsModule, RouterModule]
+    imports: [FormsModule, RouterModule]
 })
 export class LoginComponent {
   formData = {

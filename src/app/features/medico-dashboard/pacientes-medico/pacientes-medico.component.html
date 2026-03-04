@@ -12,7 +12,7 @@
     <div class="navbar-links">
       <a class="nav-link" [routerLink]="['/doctor']" routerLinkActive="active">
         <i class="fas fa-stethoscope"></i>
-            Evoluciones
+        Evoluciones
       </a>
       <a class="nav-link" [routerLink]="['/doctor/pacientes']" routerLinkActive="active">
         <i class="fas fa-procedures"></i>
@@ -26,16 +26,16 @@
   </div>
 </nav>
 <div class="container mt-4">
-    <!-- Barra de búsqueda -->
-    <div class="row mb-4">
-      <div class="col-md-6 offset-md-3">
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="searchTerm"
-            placeholder="Buscar paciente..."
-            (keyup.enter)="onSearch()"
+  <!-- Barra de búsqueda -->
+  <div class="row mb-4">
+    <div class="col-md-6 offset-md-3">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="searchTerm"
+          placeholder="Buscar paciente..."
+          (keyup.enter)="onSearch()"
           >
           <button class="btn btn-primary" (click)="onSearch()">
             <i class="fas fa-search"></i>
@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-  
+
     <!-- Tabla de pacientes -->
     <div class="card">
       <div class="card-body">
@@ -59,36 +59,42 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let patient of patients">
-                <td>{{ patient.cedula }}</td>
-                <td>{{ patient.primer_nombre }}</td>
-                <td>{{ patient.apellido_paterno }}</td>
-                <td>{{ calculateAge(patient.fecha_nacimiento) }}</td>
-                <td>
-                  <button class="btn btn-primary btn-sm" (click)="crearEvolucion(patient.id)">
-                    <i class="fas fa-notes-medical me-1"></i>
-                    Tomar Evolución
-                  </button>
-                </td>
-              </tr>
+              @for (patient of patients; track patient) {
+                <tr>
+                  <td>{{ patient.cedula }}</td>
+                  <td>{{ patient.primer_nombre }}</td>
+                  <td>{{ patient.apellido_paterno }}</td>
+                  <td>{{ calculateAge(patient.fecha_nacimiento) }}</td>
+                  <td>
+                    <button class="btn btn-primary btn-sm" (click)="crearEvolucion(patient.id)">
+                      <i class="fas fa-notes-medical me-1"></i>
+                      Tomar Evolución
+                    </button>
+                  </td>
+                </tr>
+              }
             </tbody>
           </table>
         </div>
       </div>
     </div>
-  
+
     <!-- Paginación -->
-    <nav *ngIf="totalPages > 1" class="mt-4">
-      <ul class="pagination justify-content-center">
-        <li class="page-item" [class.disabled]="currentPage === 1">
-          <a class="page-link" (click)="changePage(currentPage - 1)">Anterior</a>
-        </li>
-        <li class="page-item" *ngFor="let page of getPages()" [class.active]="page === currentPage" [class.disabled]="page === '...'">
-          <a class="page-link" [class.disabled]="page === '...'" (click)="page !== '...' && changePage(page)">{{ page }}</a>
-        </li>
-        <li class="page-item" [class.disabled]="currentPage === totalPages">
-          <a class="page-link" (click)="changePage(currentPage + 1)">Siguiente</a>
-        </li>
-      </ul>
-    </nav>
+    @if (totalPages > 1) {
+      <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" (click)="changePage(currentPage - 1)">Anterior</a>
+          </li>
+          @for (page of getPages(); track page) {
+            <li class="page-item" [class.active]="page === currentPage" [class.disabled]="page === '...'">
+              <a class="page-link" [class.disabled]="page === '...'" (click)="page !== '...' && changePage(page)">{{ page }}</a>
+            </li>
+          }
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" (click)="changePage(currentPage + 1)">Siguiente</a>
+          </li>
+        </ul>
+      </nav>
+    }
   </div>

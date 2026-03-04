@@ -1,65 +1,69 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
     selector: 'app-reset-password',
-    imports: [CommonModule, FormsModule],
+    imports: [FormsModule],
     template: `
     <div class="reset-password-container">
-  <form (ngSubmit)="onSubmit()" #resetForm="ngForm" class="reset-form">
-    <h2 class="form-title">Restablecer Contraseña</h2>
+      <form (ngSubmit)="onSubmit()" #resetForm="ngForm" class="reset-form">
+        <h2 class="form-title">Restablecer Contraseña</h2>
     
-    <div *ngIf="errorMessage" class="alert alert-danger">
-      {{ errorMessage }}
-    </div>
-
-    <div *ngIf="successMessage" class="alert alert-success">
-      {{ successMessage }}
-    </div>
-
-    <div class="form-group">
-      <label for="password" class="form-label">Nueva Contraseña:</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        [(ngModel)]="password"
-        required
-        minlength="6"
-        class="form-control"
-        [disabled]="isLoading"
-        placeholder="Ingresa tu nueva contraseña"
-      >
-    </div>
-
-    <div class="form-group">
-      <label for="confirmPassword" class="form-label">Confirmar Contraseña:</label>
-      <input
-        type="password"
-        id="confirmPassword"
-        name="confirmPassword"
-        [(ngModel)]="confirmPassword"
-        required
-        class="form-control"
-        [disabled]="isLoading"
-        placeholder="Confirma tu nueva contraseña"
-      >
-    </div>
-
-    <button 
-      type="submit" 
-      [disabled]="isLoading || !resetForm.form.valid || password !== confirmPassword" 
-      class="btn btn-primary"
-    >
-      {{ isLoading ? 'Procesando...' : 'Restablecer Contraseña' }}
-    </button>
-  </form>
-</div>
-
-  `,
+        @if (errorMessage) {
+          <div class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+        }
+    
+        @if (successMessage) {
+          <div class="alert alert-success">
+            {{ successMessage }}
+          </div>
+        }
+    
+        <div class="form-group">
+          <label for="password" class="form-label">Nueva Contraseña:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="password"
+            required
+            minlength="6"
+            class="form-control"
+            [disabled]="isLoading"
+            placeholder="Ingresa tu nueva contraseña"
+            >
+          </div>
+    
+          <div class="form-group">
+            <label for="confirmPassword" class="form-label">Confirmar Contraseña:</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              [(ngModel)]="confirmPassword"
+              required
+              class="form-control"
+              [disabled]="isLoading"
+              placeholder="Confirma tu nueva contraseña"
+              >
+            </div>
+    
+            <button
+              type="submit"
+              [disabled]="isLoading || !resetForm.form.valid || password !== confirmPassword"
+              class="btn btn-primary"
+              >
+              {{ isLoading ? 'Procesando...' : 'Restablecer Contraseña' }}
+            </button>
+          </form>
+        </div>
+    
+    `,
     styles: [`
     .reset-password-container {
   display: flex;

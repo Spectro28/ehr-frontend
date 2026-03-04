@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ConsultorioService, Consultorio, Doctor, Horario } from '../../core/services/consultorio.service';
 import { ConsultorioHorarioComponent } from './consultorio-horario/consultorio-horario.component';
@@ -16,10 +16,9 @@ interface DiaHorario {
 @Component({
     selector: 'app-consultorios',
     imports: [
-        CommonModule,
-        FormsModule,
-        ConsultorioHorarioComponent
-    ],
+    FormsModule,
+    ConsultorioHorarioComponent
+],
     templateUrl: './consultorios.component.html',
     styleUrls: ['./consultorios.component.scss']
 })

@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ExamenFisicoService, BodyPartItem, LesionCatalogItem, ExamenFisicoItemDTO, ExamenFisicoUpsertDTO } from '../../../core/services/examen-fisico.service';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
     selector: 'app-examen-fisico',
-    imports: [CommonModule, FormsModule],
+    imports: [FormsModule],
     templateUrl: './examen-fisico.component.html',
     styleUrls: ['./examen-fisico.component.scss']
 })

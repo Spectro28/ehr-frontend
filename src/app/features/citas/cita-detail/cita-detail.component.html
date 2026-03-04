@@ -1,27 +1,32 @@
 <div class="container mt-4">
-    <div class="card">
-      <div class="card-header d-flex justify-content-between align-items-center">
-        <h2>Detalle de la Cita</h2>
-        <button class="btn btn-secondary" (click)="volver()">
-          <i class="fas fa-arrow-left"></i> Volver
-        </button>
-      </div>
-  
-      <div class="card-body">
-        <!-- Mensaje de error -->
-        <div class="alert alert-danger" *ngIf="error">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h2>Detalle de la Cita</h2>
+      <button class="btn btn-secondary" (click)="volver()">
+        <i class="fas fa-arrow-left"></i> Volver
+      </button>
+    </div>
+
+    <div class="card-body">
+      <!-- Mensaje de error -->
+      @if (error) {
+        <div class="alert alert-danger">
           {{ error }}
         </div>
-  
-        <!-- Loading spinner -->
-        <div class="text-center" *ngIf="loading">
+      }
+
+      <!-- Loading spinner -->
+      @if (loading) {
+        <div class="text-center">
           <div class="spinner-border" role="status">
             <span class="visually-hidden">Cargando...</span>
           </div>
         </div>
-  
-        <!-- Información de la cita -->
-        <div *ngIf="cita && !loading">
+      }
+
+      <!-- Información de la cita -->
+      @if (cita && !loading) {
+        <div>
           <div class="row">
             <!-- Información del Paciente -->
             <div class="col-md-6">
@@ -31,24 +36,23 @@
                 </div>
                 <div class="card-body">
                   <p>
-                    <strong>Nombre:</strong> 
-                    {{ cita.paciente?.primer_nombre }} 
-                    {{ cita.paciente?.segundo_nombre }} 
-                    {{ cita.paciente?.apellido_paterno }} 
+                    <strong>Nombre:</strong>
+                    {{ cita.paciente?.primer_nombre }}
+                    {{ cita.paciente?.segundo_nombre }}
+                    {{ cita.paciente?.apellido_paterno }}
                     {{ cita.paciente?.apellido_materno }}
                   </p>
                   <p>
-                    <strong>Cédula:</strong> 
+                    <strong>Cédula:</strong>
                     {{ cita.paciente?.cedula }}
                   </p>
                   <p>
-                    <strong>Teléfono:</strong> 
+                    <strong>Teléfono:</strong>
                     {{ cita.paciente?.telefono || 'No disponible' }}
                   </p>
                 </div>
               </div>
             </div>
-  
             <!-- Información de la Cita -->
             <div class="col-md-6">
               <div class="card mb-3">
@@ -74,7 +78,6 @@
               </div>
             </div>
           </div>
-  
           <!-- Notas -->
           <div class="card mb-3">
             <div class="card-header bg-light">
@@ -84,34 +87,35 @@
               <p>{{ cita.notas || 'Sin notas adicionales' }}</p>
             </div>
           </div>
-  
           <!-- Acciones -->
           <div class="d-flex justify-content-end gap-2">
-            <button 
-              class="btn btn-primary" 
-              (click)="editarCita()"
-              *ngIf="cita.estado === 'pendiente'"
-            >
-              <i class="fas fa-edit"></i> Editar
-            </button>
-            
-            <button 
-              class="btn btn-success" 
-              (click)="actualizarEstado('atendido')"
-              *ngIf="cita.estado === 'pendiente'"
-            >
-              <i class="fas fa-check"></i> Marcar como Atendida
-            </button>
-            
-            <button 
-              class="btn btn-danger" 
-              (click)="cancelarCita()"
-              *ngIf="cita.estado === 'pendiente'"
-            >
-              <i class="fas fa-times"></i> Cancelar Cita
-            </button>
+            @if (cita.estado === 'pendiente') {
+              <button
+                class="btn btn-primary"
+                (click)="editarCita()"
+                >
+                <i class="fas fa-edit"></i> Editar
+              </button>
+            }
+            @if (cita.estado === 'pendiente') {
+              <button
+                class="btn btn-success"
+                (click)="actualizarEstado('atendido')"
+                >
+                <i class="fas fa-check"></i> Marcar como Atendida
+              </button>
+            }
+            @if (cita.estado === 'pendiente') {
+              <button
+                class="btn btn-danger"
+                (click)="cancelarCita()"
+                >
+                <i class="fas fa-times"></i> Cancelar Cita
+              </button>
+            }
           </div>
         </div>
-      </div>
+      }
     </div>
   </div>
+</div>

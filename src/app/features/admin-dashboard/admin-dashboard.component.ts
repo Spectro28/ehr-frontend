@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { ConsultoriosComponent } from '../consultorios/consultorios.component';
@@ -9,12 +9,11 @@ import { CatalogosComponent } from '../admin/catalogos/catalogos.component';
 @Component({
     selector: 'app-admin-dashboard',
     imports: [
-        CommonModule,
-        RouterModule,
-        AdminComponent, // Agregar aquí
-        ConsultoriosComponent, // Agregar aquí
-        CatalogosComponent // Agregar aquí
-    ],
+    RouterModule,
+    AdminComponent,
+    ConsultoriosComponent,
+    CatalogosComponent
+],
     templateUrl: './admin-dashboard.component.html',
     styleUrls: ['./admin-dashboard.component.css']
 })

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 interface HorarioConsulta {
@@ -11,7 +11,7 @@ interface HorarioConsulta {
 
 @Component({
     selector: 'app-consultorio-horario',
-    imports: [CommonModule, FormsModule],
+    imports: [FormsModule],
     templateUrl: './consultorio-horario.component.html',
     styleUrls: ['./consultorio-horario.component.scss']
 })

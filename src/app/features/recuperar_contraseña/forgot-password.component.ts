@@ -1,57 +1,61 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-forgot-password',
-    imports: [CommonModule, FormsModule, RouterModule],
+    imports: [FormsModule, RouterModule],
     template: `
     <div class="forgot-password-container">
-  <form (ngSubmit)="onSubmit()" #forgotForm="ngForm" class="forgot-form">
-    <h2 class="form-title">Recuperar Contraseña</h2>
+      <form (ngSubmit)="onSubmit()" #forgotForm="ngForm" class="forgot-form">
+        <h2 class="form-title">Recuperar Contraseña</h2>
     
-    <div *ngIf="errorMessage" class="alert alert-danger">
-      {{ errorMessage }}
-    </div>
-
-    <div *ngIf="successMessage" class="alert alert-success">
-      {{ successMessage }}
-    </div>
-
-    <div class="form-group">
-      <label for="email" class="form-label">Correo Electrónico:</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        [(ngModel)]="email"
-        required
-        email
-        class="form-control"
-        [disabled]="isLoading"
-        placeholder="Ingresa tu correo electrónico"
-      >
-    </div>
-
-    <button 
-      type="submit" 
-      [disabled]="isLoading || !forgotForm.form.valid" 
-      class="btn btn-primary"
-    >
-      {{ isLoading ? 'Enviando...' : 'Recuperar Contraseña' }}
-    </button>
-
-    <div class="text-center mt-3">
-      <a [routerLink]="['/login']" class="back-link">
-        ← Volver al inicio de sesión
-      </a>
-    </div>
-  </form>
-</div>
-
-  `,
+        @if (errorMessage) {
+          <div class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+        }
+    
+        @if (successMessage) {
+          <div class="alert alert-success">
+            {{ successMessage }}
+          </div>
+        }
+    
+        <div class="form-group">
+          <label for="email" class="form-label">Correo Electrónico:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="email"
+            required
+            email
+            class="form-control"
+            [disabled]="isLoading"
+            placeholder="Ingresa tu correo electrónico"
+            >
+          </div>
+    
+          <button
+            type="submit"
+            [disabled]="isLoading || !forgotForm.form.valid"
+            class="btn btn-primary"
+            >
+            {{ isLoading ? 'Enviando...' : 'Recuperar Contraseña' }}
+          </button>
+    
+          <div class="text-center mt-3">
+            <a [routerLink]="['/login']" class="back-link">
+              ← Volver al inicio de sesión
+            </a>
+          </div>
+        </form>
+      </div>
+    
+    `,
     styles: [`
     .forgot-password-container {
   display: flex;
